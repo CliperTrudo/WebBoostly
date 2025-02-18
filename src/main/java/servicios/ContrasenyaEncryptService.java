@@ -9,6 +9,8 @@ public class ContrasenyaEncryptService {
     public static String encryptPassword(String plainPassword) {
         return encoder.encode(plainPassword);
     }
+    
+    
 
     public static boolean matches(String plainPassword, String hashedPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
