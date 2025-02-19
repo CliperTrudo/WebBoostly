@@ -1,5 +1,8 @@
 package dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SesionDto {
 
 	Long id;

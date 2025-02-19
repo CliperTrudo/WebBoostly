@@ -24,39 +24,20 @@ public class ApiService {
 	private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule())
 			.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-	public String sendLoginData(MailContrasenyaRequestDto loginRequest, HttpSession session) {
+	public UsuarioDto sendLoginData(MailContrasenyaRequestDto loginRequest, HttpSession session) {
 		String url = API_BASE_URL + "/login";
 		String jsonInput;
 		try {
 			jsonInput = mapper.writeValueAsString(loginRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			return null;
 		}
 
-		UsuarioDto usuario = sendLoguin(url, jsonInput);
-
-		System.out.println("Contraseña ingresada: " + loginRequest.getContrasenya());
-		System.out.println("Contraseña a comparar: " + (usuario.getContrasenyaUsuario()));
-
-		// Verificar si la contraseña en texto plano coincide con el hash
-		boolean matches = ContrasenyaEncryptService.matches(loginRequest.getContrasenya(),
-				usuario.getContrasenyaUsuario());
-		System.out.println("¿La contraseña coincide? " + matches);
-
-		if (matches) {
-			System.out.println("Contraseña correcta");
-			SesionDto sesionUsu = new SesionDto();
-			sesionUsu.setId(usuario.getId());
-			sesionUsu.setMailUsuario(usuario.getMailUsuario());
-			sesionUsu.setRolUsuario(usuario.getRolUsuario());
-			session.setAttribute("datos", sesionUsu);
-			return "success";
-		} else {
-			// La contraseña es incorrecta
-			return "error";
-		}
-
+		 UsuarioDto usuario = sendLoguin(url, jsonInput);
+		 
+		 return usuario;
+		
 	}
 
 	public String loginGoogle(UsuarioDto usuDto, HttpSession session) {
@@ -72,10 +53,10 @@ public class ApiService {
 	}
 
 	public UsuarioDto encript(UsuarioDto usuDto, HttpSession session) {
-
+		System.out.println("Entramos vamos ");
 		String url = API_BASE_URL;
 		String jsonInput;
-		
+
 		try {
 			jsonInput = mapper.writeValueAsString(usuDto);
 		} catch (Exception e) {
