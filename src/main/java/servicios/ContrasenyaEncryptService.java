@@ -17,3 +17,4 @@ public class ContrasenyaEncryptService {
         return encoder.matches(plainPassword, hashedPassword);
     }
 }
+    
