@@ -165,7 +165,5 @@
 			</div>
 		</div>
 	</footer>
-
-	<script src="js/script_login.js"></script>
 </body>
 </html>

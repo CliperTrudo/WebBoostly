@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import servicios.ContrasenyaEncryptService;
 import servicios.RecuperacionContrasenya;
 import dtos.TokenContraseñaDto;
 
@@ -26,7 +27,7 @@ public class NuevaContraseñaController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String token = request.getParameter("token");
-		String nuevaContrasena = request.getParameter("nuevaContrasena");
+		String nuevaContrasena = ContrasenyaEncryptService.encryptPassword(request.getParameter("nuevaContrasena"));
 
 		TokenContraseñaDto dto = new TokenContraseñaDto();
         dto.setNuevaContrasena(nuevaContrasena);

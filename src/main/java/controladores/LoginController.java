@@ -63,6 +63,7 @@ public class LoginController extends HttpServlet {
 			sesionUsu.setMailUsuario(usuarioEncoradoDto.getMailUsuario());
 			sesionUsu.setRolUsuario(usuarioEncoradoDto.getRolUsuario());
 			sesion.setAttribute("datos", sesionUsu);
+			sesion.setAttribute("nombreUsuario", usuarioEncoradoDto.getNicknameUsuario());
 			respuesta = "success";
 		} else {
 			// La contraseña es incorrecta
@@ -71,8 +72,8 @@ public class LoginController extends HttpServlet {
 		
 		System.out.println(respuesta);
 		if ("success".equalsIgnoreCase(respuesta)) {
-
-			response.sendRedirect("inicio");
+			
+			response.sendRedirect("/webboostly");
 
 			return; // Redirige a ventanaPrincipal
 

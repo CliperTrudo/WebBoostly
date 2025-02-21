@@ -74,6 +74,7 @@ public class RecuperacionContrasenya {
     }
 
     public static boolean restablecerContrasena(Object requestDto) {
+    	
         String jsonInput;
         try {
             jsonInput = mapper.writeValueAsString(requestDto);
