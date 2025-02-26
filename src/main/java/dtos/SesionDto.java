@@ -7,13 +7,13 @@ public class SesionDto {
 
 	Long id;
 	String mailUsuario = "aaaaa";
-	String rolUsuario = "aaaaa";
+	long rolUsuario = 99999;
 
 	public SesionDto() {
 		super();
 	}
 
-	public SesionDto(Long id, String mailUsuario, String rolUsuario) {
+	public SesionDto(Long id, String mailUsuario, long rolUsuario) {
 		super();
 		this.id = id;
 		this.mailUsuario = mailUsuario;
@@ -36,11 +36,11 @@ public class SesionDto {
 		this.mailUsuario = mailUsuario;
 	}
 
-	public String getRolUsuario() {
+	public long getRolUsuario() {
 		return rolUsuario;
 	}
 
-	public void setRolUsuario(String rolUsuario) {
+	public void setRolUsuario(long rolUsuario) {
 		this.rolUsuario = rolUsuario;
 	}
 

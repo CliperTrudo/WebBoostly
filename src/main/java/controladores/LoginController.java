@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
 			SesionDto sesionUsu = new SesionDto();
 			sesionUsu.setId(usuarioEncoradoDto.getId());
 			sesionUsu.setMailUsuario(usuarioEncoradoDto.getMailUsuario());
-			sesionUsu.setRolUsuario(usuarioEncoradoDto.getRolUsuario());
+			sesionUsu.setRolUsuario(usuarioEncoradoDto.getRol());
 			sesion.setAttribute("datos", sesionUsu);
 			sesion.setAttribute("nombreUsuario", usuarioEncoradoDto.getNicknameUsuario());
 			respuesta = "success";

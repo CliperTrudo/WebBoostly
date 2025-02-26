@@ -1,6 +1,7 @@
 package controladores;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -34,7 +35,7 @@ public class RegistroController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Crear el objeto UsuarioDto mediante el constructor vacío
+        // Crear el objeto UsuarioDto
         UsuarioDto usuario = new UsuarioDto();
         
         // Asignar los valores recogidos del request usando setters
@@ -45,7 +46,9 @@ public class RegistroController extends HttpServlet {
         // Convertir la fecha de nacimiento (se asume formato "yyyy-MM-dd")
         String fechaNacimientoStr = request.getParameter("fecha_nacimiento_usuario");
         LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
-        usuario.setFechaNacimientoUsuario(fechaNacimiento);
+        
+        // Convertir LocalDate a java.sql.Date
+        usuario.setFechaNacimientoUsuario(Date.valueOf(fechaNacimiento));  // Convertir a java.sql.Date
         
         usuario.setNicknameUsuario(request.getParameter("nickname_usuario"));
         
@@ -54,14 +57,14 @@ public class RegistroController extends HttpServlet {
         usuario.setContrasenyaUsuario(contrasenya);
         
         // Fecha de alta: se usa la fecha actual
-        usuario.setFechaAltaUsuario(LocalDate.now());
+        usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));
         
         // Otros campos fijos o recogidos del request
         usuario.setDescripcionUsuario("aaaaa");
         usuario.setDniUsuario(request.getParameter("dni_usuario"));
         usuario.setTelefonoUsuario(request.getParameter("telefono_usuario"));
         usuario.setImgUsuario(null);  // No se recibe imagen, se establece en null
-        usuario.setRolUsuario("Usuario");
+        usuario.setRol((long) 1);
         usuario.setGoogleUsuario(false);
         usuario.setTokenRecuperacion(null);
         usuario.setTokenExpiracion(null);

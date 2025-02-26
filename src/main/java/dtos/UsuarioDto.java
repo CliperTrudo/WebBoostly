@@ -1,6 +1,6 @@
 package dtos;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Arrays;
 
 public class UsuarioDto {
@@ -9,29 +9,28 @@ public class UsuarioDto {
     private String nombreUsuario;
     private String apellidosUsuario;
     private String mailUsuario;
-    private LocalDate fechaNacimientoUsuario;
+    private Date fechaNacimientoUsuario;  // Cambiar a Date para coincidir con la API
     private String nicknameUsuario;
     private String contrasenyaUsuario;
-    private LocalDate fechaAltaUsuario;
+    private Date fechaAltaUsuario;  // Cambiar a Date para coincidir con la API
     private String descripcionUsuario;
     private String dniUsuario;
     private String telefonoUsuario;
-    private byte[] imgUsuario;
-    private String rolUsuario;
+    private byte[] imgUsuario;  // Mantener como byte[] para que coincida con la API
+    private Long rol;  // Cambiar a Long, ya que en la API se utiliza el id del rol
     private Boolean googleUsuario;
     private String tokenRecuperacion;
-    private String tokenExpiracion;
+    private Date tokenExpiracion;  // Mantener como Date para que coincida con el tipo de la API
 
     // Constructor vacío
-    public UsuarioDto() {
-    }
+    public UsuarioDto() {}
 
     // Constructor con parámetros
     public UsuarioDto(Long id, String nombreUsuario, String apellidosUsuario, String mailUsuario,
-                      LocalDate fechaNacimientoUsuario, String nicknameUsuario, String contrasenyaUsuario,
-                      LocalDate fechaAltaUsuario, String descripcionUsuario, String dniUsuario, String telefonoUsuario,
-                      byte[] imgUsuario, String rolUsuario, Boolean googleUsuario, String tokenRecuperacion,
-                      String tokenExpiracion) {
+                      Date fechaNacimientoUsuario, String nicknameUsuario, String contrasenyaUsuario,
+                      Date fechaAltaUsuario, String descripcionUsuario, String dniUsuario, String telefonoUsuario,
+                      byte[] imgUsuario, Long rol, Boolean googleUsuario, String tokenRecuperacion,
+                      Date tokenExpiracion) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.apellidosUsuario = apellidosUsuario;
@@ -44,14 +43,13 @@ public class UsuarioDto {
         this.dniUsuario = dniUsuario;
         this.telefonoUsuario = telefonoUsuario;
         this.imgUsuario = imgUsuario;
-        this.rolUsuario = rolUsuario;
+        this.rol = rol;
         this.googleUsuario = googleUsuario;
         this.tokenRecuperacion = tokenRecuperacion;
         this.tokenExpiracion = tokenExpiracion;
     }
 
     // Getters y Setters
-
     public Long getId() {
         return id;
     }
@@ -84,11 +82,11 @@ public class UsuarioDto {
         this.mailUsuario = mailUsuario;
     }
 
-    public LocalDate getFechaNacimientoUsuario() {
+    public Date getFechaNacimientoUsuario() {
         return fechaNacimientoUsuario;
     }
 
-    public void setFechaNacimientoUsuario(LocalDate fechaNacimientoUsuario) {
+    public void setFechaNacimientoUsuario(Date fechaNacimientoUsuario) {
         this.fechaNacimientoUsuario = fechaNacimientoUsuario;
     }
 
@@ -108,12 +106,12 @@ public class UsuarioDto {
         this.contrasenyaUsuario = contrasenyaUsuario;
     }
 
-    public LocalDate getFechaAltaUsuario() {
+    public Date getFechaAltaUsuario() {
         return fechaAltaUsuario;
     }
 
-    public void setFechaAltaUsuario(LocalDate fechaAlta) {
-        this.fechaAltaUsuario = fechaAlta;
+    public void setFechaAltaUsuario(Date fechaAltaUsuario) {
+        this.fechaAltaUsuario = fechaAltaUsuario;
     }
 
     public String getDescripcionUsuario() {
@@ -129,7 +127,6 @@ public class UsuarioDto {
     }
 
     public void setDniUsuario(String dniUsuario) {
-    	
         this.dniUsuario = dniUsuario;
     }
 
@@ -149,12 +146,12 @@ public class UsuarioDto {
         this.imgUsuario = imgUsuario;
     }
 
-    public String getRolUsuario() {
-        return rolUsuario;
+    public Long getRol() {
+        return rol;
     }
 
-    public void setRolUsuario(String rolUsuario) {
-        this.rolUsuario = rolUsuario;
+    public void setRol(Long rol) {
+        this.rol = rol;
     }
 
     public Boolean getGoogleUsuario() {
@@ -173,11 +170,11 @@ public class UsuarioDto {
         this.tokenRecuperacion = tokenRecuperacion;
     }
 
-    public String getTokenExpiracion() {
+    public Date getTokenExpiracion() {
         return tokenExpiracion;
     }
 
-    public void setTokenExpiracion(String tokenExpiracion) {
+    public void setTokenExpiracion(Date tokenExpiracion) {
         this.tokenExpiracion = tokenExpiracion;
     }
 
@@ -196,7 +193,7 @@ public class UsuarioDto {
                 ", dniUsuario='" + dniUsuario + '\'' +
                 ", telefonoUsuario='" + telefonoUsuario + '\'' +
                 ", imgUsuario=" + (imgUsuario != null ? Arrays.toString(imgUsuario) : "null") +
-                ", rolUsuario='" + rolUsuario + '\'' +
+                ", rol=" + rol +
                 ", googleUsuario=" + googleUsuario +
                 ", tokenRecuperacion='" + tokenRecuperacion + '\'' +
                 ", tokenExpiracion='" + tokenExpiracion + '\'' +

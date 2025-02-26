@@ -2,6 +2,7 @@ package controladores;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -104,12 +105,14 @@ public class LoginGoogleController extends HttpServlet {
 				Userinfoplus userinfo = oauth2.userinfo().get().execute();
 				System.out.println("Información del usuario obtenida: " + userinfo); // Depuración para ver la info del
 
-				UsuarioDto usuario = new UsuarioDto();																// usuario
+				UsuarioDto usuario = new UsuarioDto();
 				usuario.setMailUsuario(userinfo.getEmail());
 				usuario.setApellidosUsuario(userinfo.getFamilyName());
 				usuario.setNombreUsuario(userinfo.getGivenName());
-				
-				usuario.setFechaAltaUsuario(LocalDate.now());
+
+				// Convertir LocalDate a Date
+				usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));  // Convertir LocalDate a java.sql.Date
+
 				usuario.setGoogleUsuario(true);
 				usuario.setContrasenyaUsuario("aaaaa");
 				
