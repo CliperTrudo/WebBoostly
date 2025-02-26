@@ -19,73 +19,70 @@ import servicios.EmailService; // Nueva clase para enviar correos
 
 @WebServlet("/registro")
 public class RegistroController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private EmailService emailService = new EmailService();
+	private EmailService emailService = new EmailService();
 
-    @Override
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/registro.jsp");
-        dispatcher.forward(request, response);
+		dispatcher.forward(request, response);
 	}
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
 
-        // Crear el objeto UsuarioDto
-        UsuarioDto usuario = new UsuarioDto();
-        
-        // Asignar los valores recogidos del request usando setters
-        usuario.setNombreUsuario(request.getParameter("nombre_usuario"));
-        usuario.setApellidosUsuario(request.getParameter("apellidos_usuarios"));
-        usuario.setMailUsuario(request.getParameter("mail_usuario"));
-        
-        // Convertir la fecha de nacimiento (se asume formato "yyyy-MM-dd")
-        String fechaNacimientoStr = request.getParameter("fecha_nacimiento_usuario");
-        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
-        
-        // Convertir LocalDate a java.sql.Date
-        usuario.setFechaNacimientoUsuario(Date.valueOf(fechaNacimiento));  // Convertir a java.sql.Date
-        
-        usuario.setNicknameUsuario(request.getParameter("nickname_usuario"));
-        
-        // Encriptar la contraseña antes de asignarla
-        String contrasenya = ContrasenyaEncryptService.encryptPassword(request.getParameter("contrasenya_usuario"));
-        usuario.setContrasenyaUsuario(contrasenya);
-        
-        // Fecha de alta: se usa la fecha actual
-        usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));
-        
-        // Otros campos fijos o recogidos del request
-        usuario.setDescripcionUsuario("aaaaa");
-        usuario.setDniUsuario(request.getParameter("dni_usuario"));
-        usuario.setTelefonoUsuario(request.getParameter("telefono_usuario"));
-        usuario.setImgUsuario(null);  // No se recibe imagen, se establece en null
-        usuario.setRol((long) 1);
-        usuario.setGoogleUsuario(false);
-        usuario.setTokenRecuperacion(null);
-        usuario.setTokenExpiracion(null);
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        // Obtener la sesión
-        HttpSession sesion = request.getSession();
-        
-        // Generar un código de verificación (6 dígitos)
-        String codigoVerificacion = String.format("%06d", new Random().nextInt(999999));
-        sesion.setAttribute("codigo_verificacion", codigoVerificacion);
-        sesion.setAttribute("usuarioPendiente", usuario);
-        
-        // Enviar el código de verificación por correo
-        emailService.enviarCorreo(
-            usuario.getMailUsuario(),
-            "Código de verificación",
-            "Tu código de verificación es: " + codigoVerificacion
-        );
-        
-        // Redirigir a la página de verificación
-        response.sendRedirect("verificar.jsp");
-    }
+		// Crear el objeto UsuarioDto
+		UsuarioDto usuario = new UsuarioDto();
+
+		// Asignar los valores recogidos del request usando setters
+		usuario.setNombreUsuario(request.getParameter("nombre_usuario"));
+		usuario.setApellidosUsuario(request.getParameter("apellidos_usuarios"));
+		usuario.setMailUsuario(request.getParameter("mail_usuario"));
+
+		// Convertir la fecha de nacimiento (se asume formato "yyyy-MM-dd")
+		String fechaNacimientoStr = request.getParameter("fecha_nacimiento_usuario");
+		LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
+
+		// Convertir LocalDate a java.sql.Date
+		usuario.setFechaNacimientoUsuario(Date.valueOf(fechaNacimiento)); // Convertir a java.sql.Date
+
+		usuario.setNicknameUsuario(request.getParameter("nickname_usuario"));
+
+		// Encriptar la contraseña antes de asignarla
+		String contrasenya = ContrasenyaEncryptService.encryptPassword(request.getParameter("contrasenya_usuario"));
+		usuario.setContrasenyaUsuario(contrasenya);
+
+		// Fecha de alta: se usa la fecha actual
+		usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));
+
+		// Otros campos fijos o recogidos del request
+		usuario.setDescripcionUsuario("aaaaa");
+		usuario.setDniUsuario(request.getParameter("dni_usuario"));
+		usuario.setTelefonoUsuario(request.getParameter("telefono_usuario"));
+		usuario.setImgUsuario(null); // No se recibe imagen, se establece en null
+		usuario.setRol((long) 1);
+		usuario.setGoogleUsuario(false);
+		usuario.setTokenRecuperacion(null);
+		usuario.setTokenExpiracion(null);
+
+		// Obtener la sesión
+		HttpSession sesion = request.getSession();
+
+		// Generar un código de verificación (6 dígitos)
+		String codigoVerificacion = String.format("%06d", new Random().nextInt(999999));
+		sesion.setAttribute("codigo_verificacion", codigoVerificacion);
+		sesion.setAttribute("usuarioPendiente", usuario);
+
+		// Enviar el código de verificación por correo
+		emailService.enviarCorreo(usuario.getMailUsuario(), "Código de verificación",
+				"Tu código de verificación es: " + codigoVerificacion);
+
+		// Redirigir a la página de verificación
+		response.sendRedirect("verificar.jsp");
+	}
 
 }

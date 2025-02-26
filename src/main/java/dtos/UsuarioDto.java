@@ -1,7 +1,7 @@
 package dtos;
 
 import java.sql.Date;
-import java.util.Arrays;
+import java.sql.Timestamp;
 
 public class UsuarioDto {
 
@@ -9,18 +9,18 @@ public class UsuarioDto {
     private String nombreUsuario;
     private String apellidosUsuario;
     private String mailUsuario;
-    private Date fechaNacimientoUsuario;  // Cambiar a Date para coincidir con la API
+    private Date fechaNacimientoUsuario;
     private String nicknameUsuario;
     private String contrasenyaUsuario;
-    private Date fechaAltaUsuario;  // Cambiar a Date para coincidir con la API
+    private Date fechaAltaUsuario;
     private String descripcionUsuario;
     private String dniUsuario;
     private String telefonoUsuario;
-    private byte[] imgUsuario;  // Mantener como byte[] para que coincida con la API
-    private Long rol;  // Cambiar a Long, ya que en la API se utiliza el id del rol
+    private byte[] imgUsuario;  
+    private Long rol;  
     private Boolean googleUsuario;
     private String tokenRecuperacion;
-    private Date tokenExpiracion;  // Mantener como Date para que coincida con el tipo de la API
+    private Timestamp tokenExpiracion;  // Cambiar a Timestamp
 
     // Constructor vacío
     public UsuarioDto() {}
@@ -30,7 +30,7 @@ public class UsuarioDto {
                       Date fechaNacimientoUsuario, String nicknameUsuario, String contrasenyaUsuario,
                       Date fechaAltaUsuario, String descripcionUsuario, String dniUsuario, String telefonoUsuario,
                       byte[] imgUsuario, Long rol, Boolean googleUsuario, String tokenRecuperacion,
-                      Date tokenExpiracion) {
+                      Timestamp tokenExpiracion) {  // Cambiar a Timestamp
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.apellidosUsuario = apellidosUsuario;
@@ -48,139 +48,139 @@ public class UsuarioDto {
         this.tokenRecuperacion = tokenRecuperacion;
         this.tokenExpiracion = tokenExpiracion;
     }
+    
 
-    // Getters y Setters
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
 
-    public String getApellidosUsuario() {
-        return apellidosUsuario;
-    }
+	public String getApellidosUsuario() {
+		return apellidosUsuario;
+	}
 
-    public void setApellidosUsuario(String apellidosUsuario) {
-        this.apellidosUsuario = apellidosUsuario;
-    }
+	public void setApellidosUsuario(String apellidosUsuario) {
+		this.apellidosUsuario = apellidosUsuario;
+	}
 
-    public String getMailUsuario() {
-        return mailUsuario;
-    }
+	public String getMailUsuario() {
+		return mailUsuario;
+	}
 
-    public void setMailUsuario(String mailUsuario) {
-        this.mailUsuario = mailUsuario;
-    }
+	public void setMailUsuario(String mailUsuario) {
+		this.mailUsuario = mailUsuario;
+	}
 
-    public Date getFechaNacimientoUsuario() {
-        return fechaNacimientoUsuario;
-    }
+	public Date getFechaNacimientoUsuario() {
+		return fechaNacimientoUsuario;
+	}
 
-    public void setFechaNacimientoUsuario(Date fechaNacimientoUsuario) {
-        this.fechaNacimientoUsuario = fechaNacimientoUsuario;
-    }
+	public void setFechaNacimientoUsuario(Date fechaNacimientoUsuario) {
+		this.fechaNacimientoUsuario = fechaNacimientoUsuario;
+	}
 
-    public String getNicknameUsuario() {
-        return nicknameUsuario;
-    }
+	public String getNicknameUsuario() {
+		return nicknameUsuario;
+	}
 
-    public void setNicknameUsuario(String nicknameUsuario) {
-        this.nicknameUsuario = nicknameUsuario;
-    }
+	public void setNicknameUsuario(String nicknameUsuario) {
+		this.nicknameUsuario = nicknameUsuario;
+	}
 
-    public String getContrasenyaUsuario() {
-        return contrasenyaUsuario;
-    }
+	public String getContrasenyaUsuario() {
+		return contrasenyaUsuario;
+	}
 
-    public void setContrasenyaUsuario(String contrasenyaUsuario) {
-        this.contrasenyaUsuario = contrasenyaUsuario;
-    }
+	public void setContrasenyaUsuario(String contrasenyaUsuario) {
+		this.contrasenyaUsuario = contrasenyaUsuario;
+	}
 
-    public Date getFechaAltaUsuario() {
-        return fechaAltaUsuario;
-    }
+	public Date getFechaAltaUsuario() {
+		return fechaAltaUsuario;
+	}
 
-    public void setFechaAltaUsuario(Date fechaAltaUsuario) {
-        this.fechaAltaUsuario = fechaAltaUsuario;
-    }
+	public void setFechaAltaUsuario(Date fechaAltaUsuario) {
+		this.fechaAltaUsuario = fechaAltaUsuario;
+	}
 
-    public String getDescripcionUsuario() {
-        return descripcionUsuario;
-    }
+	public String getDescripcionUsuario() {
+		return descripcionUsuario;
+	}
 
-    public void setDescripcionUsuario(String descripcionUsuario) {
-        this.descripcionUsuario = descripcionUsuario;
-    }
+	public void setDescripcionUsuario(String descripcionUsuario) {
+		this.descripcionUsuario = descripcionUsuario;
+	}
 
-    public String getDniUsuario() {
-        return dniUsuario;
-    }
+	public String getDniUsuario() {
+		return dniUsuario;
+	}
 
-    public void setDniUsuario(String dniUsuario) {
-        this.dniUsuario = dniUsuario;
-    }
+	public void setDniUsuario(String dniUsuario) {
+		this.dniUsuario = dniUsuario;
+	}
 
-    public String getTelefonoUsuario() {
-        return telefonoUsuario;
-    }
+	public String getTelefonoUsuario() {
+		return telefonoUsuario;
+	}
 
-    public void setTelefonoUsuario(String telefonoUsuario) {
-        this.telefonoUsuario = telefonoUsuario;
-    }
+	public void setTelefonoUsuario(String telefonoUsuario) {
+		this.telefonoUsuario = telefonoUsuario;
+	}
 
-    public byte[] getImgUsuario() {
-        return imgUsuario;
-    }
+	public byte[] getImgUsuario() {
+		return imgUsuario;
+	}
 
-    public void setImgUsuario(byte[] imgUsuario) {
-        this.imgUsuario = imgUsuario;
-    }
+	public void setImgUsuario(byte[] imgUsuario) {
+		this.imgUsuario = imgUsuario;
+	}
 
-    public Long getRol() {
-        return rol;
-    }
+	public Long getRol() {
+		return rol;
+	}
 
-    public void setRol(Long rol) {
-        this.rol = rol;
-    }
+	public void setRol(Long rol) {
+		this.rol = rol;
+	}
 
-    public Boolean getGoogleUsuario() {
-        return googleUsuario;
-    }
+	public Boolean getGoogleUsuario() {
+		return googleUsuario;
+	}
 
-    public void setGoogleUsuario(Boolean googleUsuario) {
-        this.googleUsuario = googleUsuario;
-    }
+	public void setGoogleUsuario(Boolean googleUsuario) {
+		this.googleUsuario = googleUsuario;
+	}
 
-    public String getTokenRecuperacion() {
-        return tokenRecuperacion;
-    }
+	public String getTokenRecuperacion() {
+		return tokenRecuperacion;
+	}
 
-    public void setTokenRecuperacion(String tokenRecuperacion) {
-        this.tokenRecuperacion = tokenRecuperacion;
-    }
+	public void setTokenRecuperacion(String tokenRecuperacion) {
+		this.tokenRecuperacion = tokenRecuperacion;
+	}
 
-    public Date getTokenExpiracion() {
-        return tokenExpiracion;
-    }
+	public Timestamp getTokenExpiracion() {
+		return tokenExpiracion;
+	}
 
-    public void setTokenExpiracion(Date tokenExpiracion) {
-        this.tokenExpiracion = tokenExpiracion;
-    }
+	public void setTokenExpiracion(Timestamp tokenExpiracion) {
+		this.tokenExpiracion = tokenExpiracion;
+	}
 
-    @Override
+	@Override
     public String toString() {
-        return "UsuarioDto{" +
+        return "UsuariosDto{" +
                 "id=" + id +
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", apellidosUsuario='" + apellidosUsuario + '\'' +
@@ -192,7 +192,7 @@ public class UsuarioDto {
                 ", descripcionUsuario='" + descripcionUsuario + '\'' +
                 ", dniUsuario='" + dniUsuario + '\'' +
                 ", telefonoUsuario='" + telefonoUsuario + '\'' +
-                ", imgUsuario=" + (imgUsuario != null ? Arrays.toString(imgUsuario) : "null") +
+                ", imgUsuario=" + (imgUsuario != null ? "Image in byte array" : "null") +
                 ", rol=" + rol +
                 ", googleUsuario=" + googleUsuario +
                 ", tokenRecuperacion='" + tokenRecuperacion + '\'' +

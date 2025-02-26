@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import dtos.MailContrasenyaRequestDto;
+import dtos.ProyectoDto;
 import dtos.SesionDto;
 import dtos.UsuarioDto;
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,18 @@ public class ApiService {
 		 
 		 return usuario;
 		
+	}
+	
+	public String registroProyecto(ProyectoDto proyectoDto, HttpSession session) {
+	    String url = API_BASE_URL + "/proyectos"; // Ajusta según tu endpoint real
+	    String jsonInput;
+	    try {
+	        jsonInput = mapper.writeValueAsString(proyectoDto);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
+	    return sendPostRequest(url, jsonInput, session);
 	}
 
 	public String loginGoogle(UsuarioDto usuDto, HttpSession session) {

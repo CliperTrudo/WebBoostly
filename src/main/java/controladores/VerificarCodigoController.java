@@ -35,6 +35,7 @@ public class VerificarCodigoController extends HttpServlet {
             // Registrar al usuario en la base de datos
             String respuesta = apiService.registroUsuario(usuarioPendiente, sesion);
             if ("success".equalsIgnoreCase(respuesta)) {
+            	System.out.println("Registro Exitoso");
                 // El registro fue exitoso, redirigir a la página de inicio
                 response.sendRedirect("inicio");
             } else {
