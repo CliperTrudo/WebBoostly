@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 
 public class ProyectoDto {
 
-    private Long idUsuario;
+    private Long idProyecto;  
+    private Long idUsuario;  // ID del usuario asignado al proyecto
     private String nombreProyecto;
     private String descripcionProyecto;
     private byte[] imagen1Proyecto;
@@ -15,17 +16,17 @@ public class ProyectoDto {
     private LocalDate fechaFinalizacionProyecto;
     private Double metaRecaudacionProyecto;
     private Boolean estadoProyecto;
-    private String categoriaProyecto;
+    private Long idCategoria;  // ID de la categoría, no la entidad completa
 
     // Constructor vacío
-    public ProyectoDto() {
-    }
+    public ProyectoDto() {}
 
-    // Constructor completo
-    public ProyectoDto(Long idUsuario, String nombreProyecto, String descripcionProyecto,
+    // Constructor con parámetros
+    public ProyectoDto(Long idProyecto, Long idUsuario, String nombreProyecto, String descripcionProyecto,
                        byte[] imagen1Proyecto, byte[] imagen2Proyecto, byte[] imagen3Proyecto,
                        LocalDateTime fechaInicioProyecto, LocalDate fechaFinalizacionProyecto,
-                       Double metaRecaudacionProyecto, Boolean estadoProyecto, String categoriaProyecto) {
+                       Double metaRecaudacionProyecto, Boolean estadoProyecto, Long idCategoria) {
+        this.idProyecto = idProyecto;
         this.idUsuario = idUsuario;
         this.nombreProyecto = nombreProyecto;
         this.descripcionProyecto = descripcionProyecto;
@@ -36,10 +37,18 @@ public class ProyectoDto {
         this.fechaFinalizacionProyecto = fechaFinalizacionProyecto;
         this.metaRecaudacionProyecto = metaRecaudacionProyecto;
         this.estadoProyecto = estadoProyecto;
-        this.categoriaProyecto = categoriaProyecto;
+        this.idCategoria = idCategoria; // Ahora es el ID de la categoría
     }
 
     // Getters y Setters
+
+    public Long getIdProyecto() {
+        return idProyecto;
+    }
+
+    public void setIdProyecto(Long idProyecto) {
+        this.idProyecto = idProyecto;
+    }
 
     public Long getIdUsuario() {
         return idUsuario;
@@ -121,26 +130,26 @@ public class ProyectoDto {
         this.estadoProyecto = estadoProyecto;
     }
 
-    public String getCategoriaProyecto() {
-        return categoriaProyecto;
+    public Long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setCategoriaProyecto(String categoriaProyecto) {
-        this.categoriaProyecto = categoriaProyecto;
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     @Override
     public String toString() {
         return "ProyectoDto{" +
-                "idUsuario=" + idUsuario +
+                "idProyecto=" + idProyecto +
+                ", idUsuario=" + idUsuario +
                 ", nombreProyecto='" + nombreProyecto + '\'' +
                 ", descripcionProyecto='" + descripcionProyecto + '\'' +
                 ", fechaInicioProyecto=" + fechaInicioProyecto +
                 ", fechaFinalizacionProyecto=" + fechaFinalizacionProyecto +
                 ", metaRecaudacionProyecto=" + metaRecaudacionProyecto +
                 ", estadoProyecto=" + estadoProyecto +
-                ", categoriaProyecto='" + categoriaProyecto + '\'' +
+                ", idCategoria=" + idCategoria +
                 '}';
     }
 }
-

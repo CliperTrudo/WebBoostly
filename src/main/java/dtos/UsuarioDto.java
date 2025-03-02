@@ -17,7 +17,7 @@ public class UsuarioDto {
     private String dniUsuario;
     private String telefonoUsuario;
     private byte[] imgUsuario;  
-    private Long rol;  
+    private Long rol = (long) 1;  
     private Boolean googleUsuario;
     private String tokenRecuperacion;
     private Timestamp tokenExpiracion;  // Cambiar a Timestamp

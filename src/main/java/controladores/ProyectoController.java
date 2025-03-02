@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import dtos.ProyectoDto;
+import dtos.SesionDto;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -26,6 +27,12 @@ public class ProyectoController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+    	HttpSession session = request.getSession();
+
+
+        SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
+        System.out.println(sesionUsu.toString());
+    	
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/proyecto.jsp");
         dispatcher.forward(request, response);
 	}
@@ -33,13 +40,24 @@ public class ProyectoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	System.out.println("entramos en la crecion del proyecto");
         // Crear el objeto ProyectoDto
         ProyectoDto proyecto = new ProyectoDto();
 
         // Obtener la sesión para el idUsuario
         HttpSession session = request.getSession();
-        Long idUsuario = (Long) session.getAttribute("idUsuario"); // Asumiendo que el ID del usuario está en la sesión
+
+
+        SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
+        System.out.println(sesionUsu.toString());
+        Long idUsuario = null;
+
+        if (sesionUsu != null) {
+            idUsuario = sesionUsu.getId();
+        }
+        
+        System.out.println("idUsuario:" + idUsuario);
+        // Asumiendo que el ID del usuario está en la sesión
         if (idUsuario == null) {
             request.setAttribute("error", "Debes iniciar sesión para crear un proyecto.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -73,7 +91,7 @@ public class ProyectoController extends HttpServlet {
         proyecto.setEstadoProyecto(true);
 
         // Categoría
-        proyecto.setCategoriaProyecto(request.getParameter("categoriaProyecto"));
+        proyecto.setIdCategoria(Long.parseLong(request.getParameter("categoriaProyecto")));
 
         // Enviar a la API
         String resultado = apiService.registroProyecto(proyecto, session);

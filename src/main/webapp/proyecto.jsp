@@ -78,7 +78,7 @@ footer {
     <h2 class="text-center">
         <i class="fas fa-folder-plus"></i> Crear Nuevo Proyecto
     </h2>
-    <form action="procesarProyecto.jsp" method="POST" enctype="multipart/form-data">
+    <form action="/webboostly/proyecto" method="POST"  method="POST" class="needs-validation" autocomplete="off">
         <div class="mb-3">
             <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
             <div class="input-group">
@@ -127,7 +127,7 @@ footer {
                     <option value="Educación">Educación</option>
                     <option value="Salud">Salud</option>
                     <option value="Medio Ambiente">Medio Ambiente</option>
-                    <option value="Tecnología">Tecnología</option>
+                    <option value="1">Tecnología</option>
                     <option value="Arte">Arte</option>
                 </select>
             </div>

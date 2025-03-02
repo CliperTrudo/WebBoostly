@@ -2,6 +2,7 @@ package controladores;
 
 import java.io.IOException;
 
+import dtos.SesionDto;
 import dtos.UsuarioDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +38,13 @@ public class VerificarCodigoController extends HttpServlet {
             if ("success".equalsIgnoreCase(respuesta)) {
             	System.out.println("Registro Exitoso");
                 // El registro fue exitoso, redirigir a la página de inicio
-                response.sendRedirect("inicio");
+            	SesionDto sesionUsu = new SesionDto();
+    			sesionUsu.setId(usuarioPendiente.getId());
+    			sesionUsu.setMailUsuario(usuarioPendiente.getMailUsuario());
+    			sesionUsu.setRolUsuario(usuarioPendiente.getRol());
+    			sesion.setAttribute("datos", sesionUsu);
+    			
+            	response.sendRedirect("/webboostly");
             } else {
                 // Si el registro falla, mostrar el error
                 request.setAttribute("error", "Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo.");
