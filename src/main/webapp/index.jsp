@@ -18,34 +18,35 @@
 </head>
 <body id="page-top">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">
-                <img src="assets/img/logoo.png" alt="Logo" style="height: 35%; width: 35%;" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" 
-                    aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#page-top">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">EXPLORA</a></li>
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.datos}">
-                            <li class="nav-item"><a class="nav-link" href="cuenta.jsp">Cuenta</a></li>
-                            <li class="nav-item"><a class="nav-link" href="proyecto.jsp">Proyecto</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+		id="mainNav">
+		<div class="container">
+			<a class="navbar-brand" href="#page-top"> <img
+				src="assets/img/logoo.png" alt="Logo"
+				style="height: 30%; width: 30%;" />
+			</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false"
+				aria-label="Toggle navigation">
+				Menu <i class="fas fa-bars ms-1"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
+					<c:choose>
+						<c:when test="${not empty sessionScope.datos}">
+							<li class="nav-item"><a class="nav-link" href="cuenta.jsp">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
     <!-- Masthead (Header) -->
     <header class="masthead">
