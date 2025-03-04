@@ -78,7 +78,7 @@ footer {
     <h2 class="text-center">
         <i class="fas fa-folder-plus"></i> Crear Nuevo Proyecto
     </h2>
-    <form action="/webboostly/proyecto" method="POST"  method="POST" class="needs-validation" autocomplete="off">
+    <form action="proyecto" method="POST" enctype="multipart/form-data" class="needs-validation">
         <div class="mb-3">
             <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
             <div class="input-group">

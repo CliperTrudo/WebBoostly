@@ -93,6 +93,7 @@ public class ProyectoController extends HttpServlet {
         // Categoría
         proyecto.setIdCategoria(Long.parseLong(request.getParameter("categoriaProyecto")));
 
+        System.out.println(proyecto.toString());
         // Enviar a la API
         String resultado = apiService.registroProyecto(proyecto, session);
 

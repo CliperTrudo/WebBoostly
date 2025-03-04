@@ -42,7 +42,7 @@ public class ApiService {
 	}
 	
 	public String registroProyecto(ProyectoDto proyectoDto, HttpSession session) {
-	    String url = API_BASE_URL + "/proyectos"; // Ajusta según tu endpoint real
+	    String url = "http://localhost:8081/apiBoostly/api" + "/proyectos"; // Ajusta según tu endpoint real
 	    String jsonInput;
 	    try {
 	        jsonInput = mapper.writeValueAsString(proyectoDto);

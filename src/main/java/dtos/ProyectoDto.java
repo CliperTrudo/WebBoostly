@@ -2,6 +2,7 @@ package dtos;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class ProyectoDto {
 
@@ -138,18 +139,16 @@ public class ProyectoDto {
         this.idCategoria = idCategoria;
     }
 
+    
+    
     @Override
-    public String toString() {
-        return "ProyectoDto{" +
-                "idProyecto=" + idProyecto +
-                ", idUsuario=" + idUsuario +
-                ", nombreProyecto='" + nombreProyecto + '\'' +
-                ", descripcionProyecto='" + descripcionProyecto + '\'' +
-                ", fechaInicioProyecto=" + fechaInicioProyecto +
-                ", fechaFinalizacionProyecto=" + fechaFinalizacionProyecto +
-                ", metaRecaudacionProyecto=" + metaRecaudacionProyecto +
-                ", estadoProyecto=" + estadoProyecto +
-                ", idCategoria=" + idCategoria +
-                '}';
-    }
+	public String toString() {
+		return "ProyectoDto [idProyecto=" + idProyecto + ", idUsuario=" + idUsuario + ", nombreProyecto="
+				+ nombreProyecto + ", descripcionProyecto=" + descripcionProyecto + ", imagen1Proyecto="
+				+ Arrays.toString(imagen1Proyecto) + ", imagen2Proyecto=" + Arrays.toString(imagen2Proyecto)
+				+ ", imagen3Proyecto=" + Arrays.toString(imagen3Proyecto) + ", fechaInicioProyecto="
+				+ fechaInicioProyecto + ", fechaFinalizacionProyecto=" + fechaFinalizacionProyecto
+				+ ", metaRecaudacionProyecto=" + metaRecaudacionProyecto + ", estadoProyecto=" + estadoProyecto
+				+ ", idCategoria=" + idCategoria + "]";
+	}
 }

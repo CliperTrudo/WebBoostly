@@ -36,6 +36,8 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
 		String username = request.getParameter("email");
 		String password = ContrasenyaEncryptService.encryptPassword(request.getParameter("password"));
 		
