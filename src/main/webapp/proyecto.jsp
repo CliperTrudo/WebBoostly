@@ -22,35 +22,35 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <style>
-
-body {
-	background-image: url('./assets/img/fodoSolapado.jpg');
-	background-size: cover;
-	/* Ajusta la imagen para cubrir toda la pantalla */
-	background-position: center; /* Centra la imagen */
-	background-repeat: no-repeat; /* Evita que la imagen se repita */
+.project-header {
+	background-color: #f8f9fa;
+	padding: 20px;
+	border-radius: 5px;
 }
 
-.fmProyecto {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; /* Asegura que los elementos estén en una columna */
+.project-card {
+	background-color: #ffffff;
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
 }
 
-.containerform {
-    background: #ffffff; /* Fondo completamente blanco (opaco) */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    width: 50%;
-    margin-bottom: 20px; /* Asegura que haya espacio entre el formulario y el footer */
+.project-image {
+	max-height: 200px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.meta-info {
+	background-color: #f0f0f0;
+	padding: 15px;
+	border-radius: 5px;
 }
 </style>
 </head>
-<body id="page-top">
-	<!-- Navigation -->
+<body>
+
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="mainNav">
 		<div class="container">
@@ -69,104 +69,85 @@ body {
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link" href="/webboostly/cuenta">Cuenta</a></li>
-							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/cuenta">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/proyectosCategoria">Proyecto</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="/webboostly/login">Login</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/login">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="fmProyecto">
-		<div class="containerform mt-5">
-			<h2 class="text-center">
-				<i class="fas fa-folder-plus"></i> Crear Nuevo Proyecto
-			</h2>
-			<form action="proyecto" method="POST" enctype="multipart/form-data"
-				class="needs-validation">
-				<div class="mb-3">
-					<label for="nombreProyecto" class="form-label">Nombre del
-						Proyecto</label>
-					<div class="input-group">
-						<span class="input-group-text"><i class="fas fa-pen"></i></span> <input
-							type="text" class="form-control" id="nombreProyecto"
-							name="nombreProyecto" required>
-					</div>
-				</div>
-				<div class="mb-3">
-					<label for="descripcionProyecto" class="form-label">Descripción</label>
-					<div class="input-group">
-						<span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-						<textarea class="form-control" id="descripcionProyecto"
-							name="descripcionProyecto" rows="3" required></textarea>
-					</div>
-				</div>
-				<div class="mb-3">
-					<label for="imagen1Proyecto" class="form-label">Imagen 1</label> <input
-						type="file" class="form-control" id="imagen1Proyecto"
-						name="imagen1Proyecto">
-				</div>
-				<div class="mb-3">
-					<label for="imagen2Proyecto" class="form-label">Imagen 2</label> <input
-						type="file" class="form-control" id="imagen2Proyecto"
-						name="imagen2Proyecto">
-				</div>
-				<div class="mb-3">
-					<label for="imagen3Proyecto" class="form-label">Imagen 3</label> <input
-						type="file" class="form-control" id="imagen3Proyecto"
-						name="imagen3Proyecto">
-				</div>
-				<div class="mb-3">
-					<label for="fechaFinalizacionProyecto" class="form-label">Fecha
-						de Finalización</label>
-					<div class="input-group">
-						<span class="input-group-text"><i class="fas fa-calendar"></i></span>
-						<input type="date" class="form-control"
-							id="fechaFinalizacionProyecto" name="fechaFinalizacionProyecto"
-							required>
-					</div>
-				</div>
-				<div class="mb-3">
-					<label for="metaRecaudacionProyecto" class="form-label">Meta
-						de Recaudación</label>
-					<div class="input-group">
-						<span class="input-group-text"><i
-							class="fas fa-money-bill-wave"></i></span> <input type="number"
-							class="form-control" id="metaRecaudacionProyecto"
-							name="metaRecaudacionProyecto" required>
-					</div>
-				</div>
-				<div class="mb-3">
-					<label for="categoriaProyecto" class="form-label">Categoría</label>
-					<div class="input-group">
-						<span class="input-group-text"><i class="fas fa-list"></i></span>
-						<select class="form-select" id="categoriaProyecto"
-							name="categoriaProyecto" required>
-							<option value="Educación">Educación</option>
-							<option value="Salud">Salud</option>
-							<option value="Medio Ambiente">Medio Ambiente</option>
-							<option value="1">Tecnología</option>
-							<option value="Arte">Arte</option>
-						</select>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary">
-					<i class="fas fa-save"></i> Crear Proyecto
-				</button>
-			</form>
+	<br><br><br><br>
+	<div class="container mt-5">
+		<!-- Project Header -->
+		<div class="project-header text-center">
+			<h1 class="display-4">Proyecto: Clipertropia</h1>
+			<p class="lead">Descripción del proyecto y detalles importantes.</p>
 		</div>
+
+		<!-- Project Details -->
+		<div class="row">
+			<!-- Project Description -->
+			<div class="col-md-8">
+				<div class="project-card">
+					<h3>Descripción del Proyecto</h3>
+					<p>asd asd asd asd as d</p>
+				</div>
+			</div>
+
+			<!-- Project Meta Information -->
+			<div class="col-md-4">
+				<div class="project-card">
+					<h3>Información del Proyecto</h3>
+					<ul class="list-unstyled">
+						<li><strong>Fecha de Inicio:</strong> 02 de marzo de 2025</li>
+						<li><strong>Fecha de Finalización:</strong> 12 de diciembre
+							de 2025</li>
+						<li><strong>Categoría:</strong> 1</li>
+						<li><strong>Usuario:</strong> 4</li>
+						<li><strong>Meta de Recaudación:</strong> 2</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Project Images -->
+		<div class="row">
+			<div class="col-md-4">
+				<div class="project-card">
+					<h3>Imagen 1</h3>
+					<img src="" class="project-image" alt="Imagen del proyecto" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="project-card">
+					<h3>Imagen 2</h3>
+					<img src="" class="project-image" alt="Imagen del proyecto" />
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="project-card">
+					<h3>Imagen 3</h3>
+					<img src="" class="project-image" alt="Imagen del proyecto" />
+				</div>
+			</div>
+		</div>
+
+		<!-- Meta and Extra Info -->
+		<div class="meta-info mt-5">
+			<h4>Detalles adicionales</h4>
+			<p>Aquí puedes agregar cualquier información extra que desees
+				mostrar sobre el proyecto, como avances, comentarios o
+				características específicas.</p>
+		</div>
+
 	</div>
-
-
-
-	<!-- Footer-->
 	<footer class="footer py-4">
 		<div class="container">
 			<div class="row align-items-center">

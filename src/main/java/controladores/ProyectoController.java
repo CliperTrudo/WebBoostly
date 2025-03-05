@@ -33,7 +33,7 @@ public class ProyectoController extends HttpServlet {
         SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
         System.out.println(sesionUsu.toString());
     	
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/proyecto.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/formProyecto.jsp");
         dispatcher.forward(request, response);
 	}
     
@@ -46,7 +46,6 @@ public class ProyectoController extends HttpServlet {
 
         // Obtener la sesión para el idUsuario
         HttpSession session = request.getSession();
-
 
         SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
         System.out.println(sesionUsu.toString());
