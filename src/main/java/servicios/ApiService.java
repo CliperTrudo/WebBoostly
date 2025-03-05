@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -25,6 +27,68 @@ public class ApiService {
 	private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule())
 			.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+	public List<ProyectoDto> obtenerProyectosPorUsuario(Long idUsuario) {
+        String url = "http://localhost:8081/apiBoostly/api/proyectos/usuario/" + idUsuario;
+
+        try {
+            URI uri = new URI(url);
+            URL apiUrl = uri.toURL();
+
+            HttpURLConnection conexion = (HttpURLConnection) apiUrl.openConnection();
+            conexion.setRequestMethod("GET");
+            conexion.setRequestProperty("Accept", "application/json");
+
+            int codigoRespuesta = conexion.getResponseCode();
+            if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                return Arrays.asList(mapper.readValue(response.toString(), ProyectoDto[].class));
+            } else {
+                System.out.println("Error al obtener proyectos del usuario: " + codigoRespuesta);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	
+	public UsuarioDto obtenerUsuarioPorId(Long idUsuario) {
+        String url = API_BASE_URL + "/" + idUsuario;
+
+        try {
+            URI uri = new URI(url);
+            URL apiUrl = uri.toURL();
+
+            HttpURLConnection conexion = (HttpURLConnection) apiUrl.openConnection();
+            conexion.setRequestMethod("GET");
+            conexion.setRequestProperty("Accept", "application/json");
+
+            int codigoRespuesta = conexion.getResponseCode();
+            if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                return mapper.readValue(response.toString(), UsuarioDto.class);
+            } else {
+                System.out.println("Error al obtener usuario: " + codigoRespuesta);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	
 	public UsuarioDto sendLoginData(MailContrasenyaRequestDto loginRequest, HttpSession session) {
 		String url = API_BASE_URL + "/login";
 		String jsonInput;

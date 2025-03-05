@@ -21,6 +21,16 @@
 	rel="stylesheet" type="text/css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
+
+<style>
+body {
+	background-image: url('./assets/img/fondoLisoEstiloPapel.jpg');
+	background-size: cover;
+	/* Ajusta la imagen para cubrir toda la pantalla */
+	background-position: center; /* Centra la imagen */
+	background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+</style>
 </head>
 <body id="page-top">
 	<!-- Navigation -->
@@ -42,11 +52,14 @@
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link" href="cuenta.jsp">Cuenta</a></li>
-							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/cuenta">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/proyectosCategoria">Proyecto</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/login">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
@@ -54,24 +67,37 @@
 		</div>
 	</nav>
 
-	<br><br><br><br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<div class="container mt-5">
 		<h2 class="text-center">Proyectos por Categoría</h2>
 
-		<!-- Selector de Categoría -->
-		<div class="mb-3">
-			<label for="categoriaSelect" class="form-label">Selecciona
-				una categoría:</label> <select id="categoriaSelect" class="form-select">
-				<option value="1">Tecnología</option>
-				<option value="4">Arte</option>
-				<option value="5">Medio Ambiente</option>
-			</select>
+		<!-- Contenedor para centrar elementos en la misma línea -->
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<!-- Selector de Categoría más pequeño a la izquierda -->
+			<div class="d-flex align-items-center">
+				<label for="categoriaSelect" class="form-label me-2 mb-0">Selecciona
+					una categoría:</label> <select id="categoriaSelect"
+					class="form-select w-30">
+					<option value="1">Tecnología</option>
+					<option value="4">Arte</option>
+					<option value="5">Medio Ambiente</option>
+				</select>
+			</div>
+
+			<!-- Botón a la derecha -->
+			<button class="btn bg-success text-white"
+				onclick="window.location.href='/webboostly/proyecto'">Crear
+				Proyecto</button>
 		</div>
 
 		<div class="row" id="proyectosContainer">
 			<!-- Aquí se cargarán los proyectos dinámicamente -->
 		</div>
 	</div>
+
 
 	<script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -127,13 +153,13 @@
                         const cardTitle = document.createElement("h5");
                         cardTitle.classList.add("card-title");
                         console.log("Tipo de nombreProyecto:", typeof proyecto.nombreProyecto, "Valor:", proyecto.nombreProyecto);
-                        cardTitle.textContent = "Nombre: " + proyecto.nombreProyecto;
+                        cardTitle.textContent =proyecto.nombreProyecto;
                         console.log("Nombre asignado:", cardTitle.textContent);
                         
                         const cardText = document.createElement("p");
                         cardText.classList.add("card-text");
                         console.log("Tipo de descripcionProyecto:", typeof proyecto.descripcionProyecto, "Valor:", proyecto.descripcionProyecto);
-                        cardText.textContent = "Descripcion: " + proyecto.descripcionProyecto;
+                        cardText.textContent = proyecto.descripcionProyecto;
                         console.log("Descripción asignada:", cardText.textContent);
 
                         const cardLink = document.createElement("a");

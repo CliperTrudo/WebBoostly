@@ -36,11 +36,11 @@
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link" href="cuenta.jsp">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link" href="/webboostly/cuenta">Cuenta</a></li>
 							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+							<li class="nav-item"><a class="nav-link" href="/webboostly/login">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

@@ -22,16 +22,20 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <style>
+
+body {
+	background-image: url('./assets/img/fodoSolapado.jpg');
+	background-size: cover;
+	/* Ajusta la imagen para cubrir toda la pantalla */
+	background-position: center; /* Centra la imagen */
+	background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
 .fmProyecto {
-    background-image: url("assets/img/fondoProyecto.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-attachment: fixed;
     flex-direction: column; /* Asegura que los elementos estén en una columna */
 }
 
@@ -65,11 +69,11 @@
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link" href="cuenta.jsp">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link" href="/webboostly/cuenta">Cuenta</a></li>
 							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+							<li class="nav-item"><a class="nav-link" href="/webboostly/login">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
