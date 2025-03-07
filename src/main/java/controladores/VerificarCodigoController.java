@@ -13,20 +13,46 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import servicios.ApiService;
 
-@WebServlet("/verificarCodigo")
+/**
+ * Controlador encargado de manejar la verificación del código de registro.
+ * Este controlador procesa la verificación del código ingresado por el usuario
+ * y realiza el registro del nuevo usuario si el código es correcto.
+ * 
+ * @author Sergio Alfonseca
+ */
+@WebServlet("/verificarCodigo") // Anotación para registrar el servlet en el mapeo de URL "/verificarCodigo"
 public class VerificarCodigoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
+    // Servicio para interactuar con la API y registrar el usuario
     private ApiService apiService = new ApiService();
-    
-    @Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/verificar.jsp");
+    /**
+     * Método que maneja la solicitud GET para mostrar la página de verificación del código.
+     * 
+     * @param request La solicitud HTTP recibida.
+     * @param response La respuesta HTTP a enviar.
+     * @throws ServletException Si ocurre un error durante el procesamiento de la solicitud.
+     * @throws IOException Si ocurre un error de entrada/salida.
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Redirige a la página de verificación
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/verificar.jsp");
         dispatcher.forward(request, response);
-	}
-    
-    
+    }
+
+    /**
+     * Método que maneja la solicitud POST para procesar el código ingresado por el usuario.
+     * Verifica si el código es correcto y, si es así, registra al usuario.
+     * 
+     * @param request La solicitud HTTP recibida.
+     * @param response La respuesta HTTP a enviar.
+     * @throws ServletException Si ocurre un error durante el procesamiento de la solicitud.
+     * @throws IOException Si ocurre un error de entrada/salida.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -47,7 +73,7 @@ public class VerificarCodigoController extends HttpServlet {
             String respuesta = apiService.registroUsuario(usuarioPendiente);
             if ("success".equalsIgnoreCase(respuesta)) {
             	System.out.println("Registro Exitoso");
-                // El registro fue exitoso, redirigir a la página de inicio
+                // El registro fue exitoso, redirigir a la página principal
             	SesionDto sesionUsu = new SesionDto();
     			sesionUsu.setId(usuarioPendiente.getId());
     			sesionUsu.setMailUsuario(usuarioPendiente.getMailUsuario());

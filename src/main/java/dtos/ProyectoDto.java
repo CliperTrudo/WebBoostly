@@ -41,8 +41,19 @@ public class ProyectoDto {
         this.idCategoria = idCategoria; // Ahora es el ID de la categoría
     }
 
-    // Getters y Setters
-
+    /**
+     * Métodos Getters y Setters:
+     * - getIdProyecto() y setIdProyecto(): Obtienen y establecen el ID del proyecto.
+     * - getIdUsuario() y setIdUsuario(): Obtienen y establecen el ID del usuario asignado al proyecto.
+     * - getNombreProyecto() y setNombreProyecto(): Obtienen y establecen el nombre del proyecto.
+     * - getDescripcionProyecto() y setDescripcionProyecto(): Obtienen y establecen la descripción del proyecto.
+     * - getImagen1Proyecto(), getImagen2Proyecto(), getImagen3Proyecto(): Métodos para obtener y establecer las imágenes del proyecto.
+     * - getFechaInicioProyecto() y setFechaInicioProyecto(): Obtienen y establecen la fecha de inicio del proyecto.
+     * - getFechaFinalizacionProyecto() y setFechaFinalizacionProyecto(): Obtienen y establecen la fecha de finalización del proyecto.
+     * - getMetaRecaudacionProyecto() y setMetaRecaudacionProyecto(): Obtienen y establecen la meta de recaudación.
+     * - getEstadoProyecto() y setEstadoProyecto(): Obtienen y establecen el estado del proyecto (activo o inactivo).
+     * - getIdCategoria() y setIdCategoria(): Obtienen y establecen el ID de la categoría del proyecto.
+     */
     public Long getIdProyecto() {
         return idProyecto;
     }
@@ -139,16 +150,18 @@ public class ProyectoDto {
         this.idCategoria = idCategoria;
     }
 
-    
-    
+    /**
+     * Método toString():
+     * - Devuelve una representación en formato String de todos los atributos del proyecto, incluyendo el ID, nombre, descripción, imágenes, fechas, etc.
+     */
     @Override
-	public String toString() {
-		return "ProyectoDto [idProyecto=" + idProyecto + ", idUsuario=" + idUsuario + ", nombreProyecto="
-				+ nombreProyecto + ", descripcionProyecto=" + descripcionProyecto + ", imagen1Proyecto="
-				+ Arrays.toString(imagen1Proyecto) + ", imagen2Proyecto=" + Arrays.toString(imagen2Proyecto)
-				+ ", imagen3Proyecto=" + Arrays.toString(imagen3Proyecto) + ", fechaInicioProyecto="
-				+ fechaInicioProyecto + ", fechaFinalizacionProyecto=" + fechaFinalizacionProyecto
-				+ ", metaRecaudacionProyecto=" + metaRecaudacionProyecto + ", estadoProyecto=" + estadoProyecto
-				+ ", idCategoria=" + idCategoria + "]";
-	}
+    public String toString() {
+        return "ProyectoDto [idProyecto=" + idProyecto + ", idUsuario=" + idUsuario + ", nombreProyecto=" 
+                + nombreProyecto + ", descripcionProyecto=" + descripcionProyecto + ", imagen1Proyecto=" 
+                + Arrays.toString(imagen1Proyecto) + ", imagen2Proyecto=" + Arrays.toString(imagen2Proyecto) 
+                + ", imagen3Proyecto=" + Arrays.toString(imagen3Proyecto) + ", fechaInicioProyecto=" 
+                + fechaInicioProyecto + ", fechaFinalizacionProyecto=" + fechaFinalizacionProyecto 
+                + ", metaRecaudacionProyecto=" + metaRecaudacionProyecto + ", estadoProyecto=" + estadoProyecto 
+                + ", idCategoria=" + idCategoria + "]";
+    }
 }
