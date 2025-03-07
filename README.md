@@ -2,6 +2,8 @@
 
 WebBoostly es la interfaz web de la aplicación Boostly, diseñada para gestionar proyectos y usuarios a través de una interfaz sencilla y moderna. Se utiliza en combinación con la API de **ApiBoostly** para realizar operaciones sobre la base de datos, como la creación, edición y eliminación de proyectos, así como la gestión de usuarios y sesiones.
 
+🔗 [Ver el video en YouTube](https://youtu.be/EZojRHPZ1AI)
+
 ## 🚀 Tecnologías Utilizadas
 
 - **Java 21**
