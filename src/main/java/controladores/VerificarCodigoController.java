@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import dtos.SesionDto;
 import dtos.UsuarioDto;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +17,16 @@ import servicios.ApiService;
 public class VerificarCodigoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ApiService apiService = new ApiService();
+    
+    @Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/verificar.jsp");
+        dispatcher.forward(request, response);
+	}
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -34,7 +44,7 @@ public class VerificarCodigoController extends HttpServlet {
             UsuarioDto usuarioPendiente = (UsuarioDto) sesion.getAttribute("usuarioPendiente");
 
             // Registrar al usuario en la base de datos
-            String respuesta = apiService.registroUsuario(usuarioPendiente, sesion);
+            String respuesta = apiService.registroUsuario(usuarioPendiente);
             if ("success".equalsIgnoreCase(respuesta)) {
             	System.out.println("Registro Exitoso");
                 // El registro fue exitoso, redirigir a la página de inicio

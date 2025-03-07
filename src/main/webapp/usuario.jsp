@@ -180,26 +180,28 @@ body {
 				<div class="card h-100">
 					<div class="card-body">
 						<h3>Proyectos</h3>
-						<ul class="list-group">
+						<div class="list-group" id="myList" role="tablist">
 							<%
 							if (proyectos != null && !proyectos.isEmpty()) {
 							%>
 							<%
 							for (ProyectoDto proyecto : proyectos) {
 							%>
-							<li class="list-group-item"><strong><%=proyecto.getNombreProyecto()%></strong></li>
+							<a class="list-group-item list-group-item-action"
+								data-toggle="list" href="proyectoMostrar?id=<%=proyecto.getIdProyecto()%>" role="tab"><%=proyecto.getNombreProyecto()%></a>
+							
 							<%
 							}
 							%>
 							<%
 							} else {
 							%>
-							<li class="list-group-item">No hay proyectos asociados a
-								este usuario.</li>
+							<a>No hay proyectos asociados a
+								este usuario.</a>
 							<%
 							}
 							%>
-						</ul>
+						</div>
 					</div>
 				</div>
 			</div>

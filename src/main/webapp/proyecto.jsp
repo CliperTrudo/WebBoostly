@@ -1,3 +1,4 @@
+<%@page import="dtos.UsuarioDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -83,71 +84,139 @@
 			</div>
 		</div>
 	</nav>
-	<br><br><br><br>
-	<div class="container mt-5">
-		<!-- Project Header -->
-		<div class="project-header text-center">
-			<h1 class="display-4">Proyecto: Clipertropia</h1>
-			<p class="lead">Descripción del proyecto y detalles importantes.</p>
-		</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<script>
+		// Crear un objeto de JavaScript con los datos de 'proyecto'
+		var proyecto = {
+			nombreProyecto : "${proyecto.nombreProyecto}",
+			descripcionProyecto : "${proyecto.descripcionProyecto}",
+			fechaInicioProyecto : "${proyecto.fechaInicioProyecto}",
+			fechaFinalizacionProyecto : "${proyecto.fechaFinalizacionProyecto}",
+			idCategoria : "${proyecto.idCategoria}",
+			idUsuario : "${proyecto.idUsuario}",
+			metaRecaudacionProyecto : "${proyecto.metaRecaudacionProyecto}",
+			imagen1Proyecto : "${proyecto.imagen1Proyecto}",
+			imagen2Proyecto : "${proyecto.imagen2Proyecto}",
+			imagen3Proyecto : "${proyecto.imagen3Proyecto}"
+		};
 
-		<!-- Project Details -->
+		// Mostrar en la consola del navegador
+		console.log("Objeto Proyecto desde el backend:", proyecto);
+	</script>
+
+	<c:if
+		test="${not empty sessionScope.datos and sessionScope.datos.id eq proyecto.idUsuario}">
+		<button
+			class="btn position-fixed top-50 end-0 translate-middle-y m-3 bg-success text-white"
+			onclick="window.location.href='/webboostly/editarProyecto?id=${proyecto.idProyecto}'">Editar
+			Proyecto</button>
+
+		<button
+			class="btn position-fixed bottom-0 start-0 m-3 bg-danger text-white"
+			onclick="confirmarEliminacion('${proyecto.idProyecto}')">
+			Eliminar Proyecto</button>
+	</c:if>
+
+	<div class="modal fade" id="confirmacionModal" tabindex="-1"
+		aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="confirmacionModalLabel">Confirmar
+						Eliminación</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">¿Estás seguro de que deseas eliminar
+					este proyecto? Esta acción no se puede deshacer.</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Cancelar</button>
+					<form id="eliminarProyectoForm" method="POST"
+						action="/webboostly/eliminarProyecto">
+						<input type="hidden" name="idProyecto" id="idProyectoEliminar">
+						<button type="submit" class="btn btn-danger">Confirmar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function confirmarEliminacion(idProyecto) {
+			// Establece el ID del proyecto en el formulario de eliminación
+			document.getElementById('idProyectoEliminar').value = idProyecto;
+			// Muestra el modal de confirmación
+			var confirmacionModal = new bootstrap.Modal(document
+					.getElementById('confirmacionModal'));
+			confirmacionModal.show();
+		}
+	</script>
+
+	<div class="container mt-5">
+		<div class="project-header text-center">
+			<h1 class="display-4">Proyecto: ${proyecto.nombreProyecto}</h1>
+
+		</div>
 		<div class="row">
-			<!-- Project Description -->
 			<div class="col-md-8">
 				<div class="project-card">
 					<h3>Descripción del Proyecto</h3>
-					<p>asd asd asd asd as d</p>
+					<p>${proyecto.descripcionProyecto}</p>
 				</div>
 			</div>
-
-			<!-- Project Meta Information -->
 			<div class="col-md-4">
 				<div class="project-card">
 					<h3>Información del Proyecto</h3>
 					<ul class="list-unstyled">
-						<li><strong>Fecha de Inicio:</strong> 02 de marzo de 2025</li>
-						<li><strong>Fecha de Finalización:</strong> 12 de diciembre
-							de 2025</li>
-						<li><strong>Categoría:</strong> 1</li>
-						<li><strong>Usuario:</strong> 4</li>
-						<li><strong>Meta de Recaudación:</strong> 2</li>
+						<li><strong>Fecha de Inicio:</strong>
+							${proyecto.fechaInicioProyecto}</li>
+						<li><strong>Fecha de Finalización:</strong>
+							${proyecto.fechaFinalizacionProyecto}</li>
+						<li><strong>Categoría:</strong> ${proyecto.idCategoria}</li>
+						<li><strong>Usuario:</strong> ${proyecto.idUsuario}</li>
+						<li><strong>Meta de Recaudación:</strong>
+							${proyecto.metaRecaudacionProyecto}</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-
-		<!-- Project Images -->
 		<div class="row">
-			<div class="col-md-4">
-				<div class="project-card">
-					<h3>Imagen 1</h3>
-					<img src="" class="project-image" alt="Imagen del proyecto" />
+			<c:if test="${not empty imagen1Base64}">
+				<div class="col-md-4">
+					<div class="project-card">
+						<h3>Imagen 1</h3>
+						<img src="data:image/png;base64,${imagen1Base64}"
+							class="project-image" alt="Imagen 1 del proyecto" />
+					</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="project-card">
-					<h3>Imagen 2</h3>
-					<img src="" class="project-image" alt="Imagen del proyecto" />
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="project-card">
-					<h3>Imagen 3</h3>
-					<img src="" class="project-image" alt="Imagen del proyecto" />
-				</div>
-			</div>
-		</div>
+			</c:if>
 
-		<!-- Meta and Extra Info -->
-		<div class="meta-info mt-5">
-			<h4>Detalles adicionales</h4>
-			<p>Aquí puedes agregar cualquier información extra que desees
-				mostrar sobre el proyecto, como avances, comentarios o
-				características específicas.</p>
-		</div>
+			<c:if test="${not empty imagen2Base64}">
+				<div class="col-md-4">
+					<div class="project-card">
+						<h3>Imagen 2</h3>
+						<img src="data:image/png;base64,${imagen2Base64}"
+							class="project-image" alt="Imagen 2 del proyecto" />
+					</div>
+				</div>
+			</c:if>
 
+			<c:if test="${not empty imagen3Base64}">
+				<div class="col-md-4">
+					<div class="project-card">
+						<h3>Imagen 3</h3>
+						<img src="data:image/png;base64,${imagen3Base64}"
+							class="project-image" alt="Imagen 3 del proyecto" />
+					</div>
+				</div>
+			</c:if>
+		</div>
 	</div>
+
 	<footer class="footer py-4">
 		<div class="container">
 			<div class="row align-items-center">

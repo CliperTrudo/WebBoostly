@@ -15,6 +15,7 @@ import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.Oauth2Scopes;
 import com.google.api.services.oauth2.model.Userinfoplus;
 
+import dtos.SesionDto;
 import dtos.UsuarioDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,9 +30,9 @@ public class LoginGoogleController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final String CLIENT_ID = "797777584256-rv70sv8lpr6pvl9bbki0b029p0fse5se.apps.googleusercontent.com"; // Reemplaza
-	private ApiService apiService = new ApiService();																													// con
-																														// tu
-																														// CLIENT_ID
+	private ApiService apiService = new ApiService(); // con
+														// tu
+														// CLIENT_ID
 	private static final String CLIENT_SECRET = "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"; // Reemplaza con tu CLIENT_SECRET
 	private static final String REDIRECT_URI = "http://localhost:8080/webboostly/login/google"; // Debe coincidir con el
 																								// URI de redirección en
@@ -42,36 +43,28 @@ public class LoginGoogleController extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		// Verifica si el usuario ya está autenticado
-		if (session.getAttribute("user") != null) {
-			// Si el usuario ya está autenticado, redirige a la página de bienvenida
-			response.sendRedirect("/welcome");
+		// Forzar inicio de sesión cada vez
+		session.removeAttribute("datos");
+
+		String code = request.getParameter("code");
+
+		if (code != null) {
+			doPost(request, response);
 		} else {
-			// Verifica si hay un parámetro "code" en la URL
-			String code = request.getParameter("code");
+			try {
+				GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+						GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), CLIENT_ID,
+						CLIENT_SECRET, Arrays.asList(Oauth2Scopes.USERINFO_EMAIL, Oauth2Scopes.USERINFO_PROFILE))
+						.setAccessType("offline").build();
 
-			// Si el código de autorización ya está en la URL, procesa el intercambio de
-			// tokens
-			if (code != null) {
-				
-				// Llamamos al método doPost para manejar la obtención del token y el login
-				doPost(request, response);
-			} else {
-				// Si no hay código, redirige a Google para la autenticación
-				try {
-					GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-							GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(),
-							CLIENT_ID, CLIENT_SECRET,
-							Arrays.asList(Oauth2Scopes.USERINFO_EMAIL, Oauth2Scopes.USERINFO_PROFILE))
-							.setAccessType("offline").build();
+				// Forzar selección de cuenta en cada login
+				String authorizationUrl = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI)
+						.set("prompt", "select_account").build();
 
-					String authorizationUrl = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
-					response.sendRedirect(authorizationUrl); // Redirige al usuario para login
-				} catch (GeneralSecurityException | IOException e) {
-					e.printStackTrace();
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							"Ocurrió un error durante la autenticación.");
-				}
+				response.sendRedirect(authorizationUrl);
+			} catch (GeneralSecurityException | IOException e) {
+				e.printStackTrace();
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en la autenticación.");
 			}
 		}
 	}
@@ -79,62 +72,72 @@ public class LoginGoogleController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String code = request.getParameter("code"); // Recibe el código de Google
-		System.out.println("Código recibido: " + code); // Depuración para verificar si el código se recibe
-														// correctamente
+		String code = request.getParameter("code");
 
-		if (code != null) {
-			try {
-				System.out.println("Iniciando flujo de OAuth2...");
-				// Crea el flujo de OAuth2 y obtiene el token de acceso
-				GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-						GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), CLIENT_ID,
-						CLIENT_SECRET, Arrays.asList(Oauth2Scopes.USERINFO_EMAIL, Oauth2Scopes.USERINFO_PROFILE))
-						.setAccessType("offline").build();
-
-				System.out.println("Solicitando token con el código de autorización...");
-				TokenResponse tokenResponse = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
-				Credential credential = flow.createAndStoreCredential(tokenResponse, "user");
-
-				// Usamos las credenciales para obtener información del usuario
-				Oauth2 oauth2 = new Oauth2.Builder(GoogleNetHttpTransport.newTrustedTransport(),
-						JacksonFactory.getDefaultInstance(), credential).setApplicationName("Google OAuth2 Example")
-						.build();
-
-				System.out.println("Obteniendo información del usuario...");
-				Userinfoplus userinfo = oauth2.userinfo().get().execute();
-				System.out.println("Información del usuario obtenida: " + userinfo); // Depuración para ver la info del
-
-				UsuarioDto usuario = new UsuarioDto();
-				usuario.setMailUsuario(userinfo.getEmail());
-				usuario.setApellidosUsuario(userinfo.getFamilyName());
-				usuario.setNombreUsuario(userinfo.getGivenName());
-
-				// Convertir LocalDate a Date
-				usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));  // Convertir LocalDate a java.sql.Date
-
-				usuario.setGoogleUsuario(true);
-				usuario.setContrasenyaUsuario("aaaaa");
-				
-				System.out.println("Usuario justo antes de mandar" + usuario.toString());
-				
-				apiService.loginGoogle(usuario, request.getSession());
-				
-				// Almacenamos la información del usuario en la sesión
-				HttpSession session = request.getSession();
-				session.setAttribute("user", userinfo);
-				System.out.println("Usuario guardado en la sesión.");
-
-				// Redirige a una página de bienvenida
-				response.sendRedirect("/welcome");
-
-			} catch (GeneralSecurityException | IOException e) {
-				e.printStackTrace();
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"Error al procesar el código de autorización.");
-			}
-		} else {
+		if (code == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Código de autorización no encontrado");
+			return;
+		}
+
+		try {
+			System.out.println("Iniciando flujo de OAuth2...");
+
+			// Flujo de autenticación de Google
+			GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+					GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), CLIENT_ID,
+					CLIENT_SECRET, Arrays.asList(Oauth2Scopes.USERINFO_EMAIL, Oauth2Scopes.USERINFO_PROFILE))
+					.setAccessType("offline").build();
+
+			// Obtener token
+			TokenResponse tokenResponse = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI).execute();
+			Credential credential = flow.createAndStoreCredential(tokenResponse, "user");
+
+			// Obtener información del usuario desde Google
+			Oauth2 oauth2 = new Oauth2.Builder(GoogleNetHttpTransport.newTrustedTransport(),
+					JacksonFactory.getDefaultInstance(), credential).setApplicationName("Google OAuth2 Login").build();
+
+			Userinfoplus userinfo = oauth2.userinfo().get().execute();
+			System.out.println("Información del usuario obtenida: " + userinfo);
+
+			// Crear objeto UsuarioDto
+			UsuarioDto usuario = new UsuarioDto();
+			usuario.setMailUsuario(userinfo.getEmail()); // Usamos email como identificador único
+			usuario.setApellidosUsuario(userinfo.getFamilyName());
+			usuario.setNombreUsuario(userinfo.getGivenName());
+			usuario.setFechaAltaUsuario(Date.valueOf(LocalDate.now()));
+			usuario.setGoogleUsuario(true);
+			usuario.setContrasenyaUsuario("google_autogenerated");
+
+			System.out.println("Usuario antes de enviar a la API: " + usuario);
+
+			// 🚀 Buscar usuario por email en la base de datos
+			UsuarioDto usuarioExistente = apiService.obtenerUsuarioPorEmail(userinfo.getEmail());
+
+			if (usuarioExistente == null) {
+				System.out.println("Usuario no encontrado en la base de datos, registrando...");
+				apiService.registroUsuario(usuario);
+			} else {
+				System.out.println("Usuario ya registrado, procediendo con login...");
+				usuario = usuarioExistente; // Usamos la info del usuario ya registrado
+			}
+
+			System.out.println(usuario.toString());
+
+			SesionDto sesionDto = new SesionDto(usuarioExistente.getId(), usuarioExistente.getMailUsuario(),
+					usuarioExistente.getRol() // Asegúrate de que UsuarioDto tiene este campo
+			);
+
+			// Guardamos en sesión el usuario autenticado
+			HttpSession session = request.getSession();
+			session.setAttribute("datos", sesionDto);
+
+			System.out.println("Usuario guardado en la sesión correctamente.");
+			response.sendRedirect("/webboostly/");
+
+		} catch (GeneralSecurityException | IOException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al procesar la autenticación.");
 		}
 	}
+
 }

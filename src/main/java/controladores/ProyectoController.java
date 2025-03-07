@@ -28,10 +28,15 @@ public class ProyectoController extends HttpServlet {
 			throws ServletException, IOException {
 
     	HttpSession session = request.getSession();
-
-
         SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
-        System.out.println(sesionUsu.toString());
+        
+        if (sesionUsu != null) {
+	        System.out.println(sesionUsu.toString());
+	    } else {
+	        System.out.println("Sesión no iniciada.");
+	        response.sendRedirect("/webboostly/login");
+	        return;
+	    }
     	
         RequestDispatcher dispatcher = request.getRequestDispatcher("/formProyecto.jsp");
         dispatcher.forward(request, response);
@@ -50,18 +55,15 @@ public class ProyectoController extends HttpServlet {
         SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
         System.out.println(sesionUsu.toString());
         Long idUsuario = null;
-
-        if (sesionUsu != null) {
-            idUsuario = sesionUsu.getId();
-        }
         
-        System.out.println("idUsuario:" + idUsuario);
-        // Asumiendo que el ID del usuario está en la sesión
-        if (idUsuario == null) {
-            request.setAttribute("error", "Debes iniciar sesión para crear un proyecto.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
-        }
+        if (sesionUsu != null && sesionUsu.getId() != null) {
+        	idUsuario = sesionUsu.getId();
+	    } else {
+	        System.out.println("Sesión no iniciada.");
+	        response.sendRedirect("/webboostly/login");
+	        return;
+	    }
+        
         proyecto.setIdUsuario(idUsuario);
 
         // Asignar valores del formulario
@@ -94,8 +96,8 @@ public class ProyectoController extends HttpServlet {
 
         System.out.println(proyecto.toString());
         // Enviar a la API
-        String resultado = apiService.registroProyecto(proyecto, session);
-
+        String resultado = apiService.registroProyecto(proyecto);
+        System.out.println("resultado:" + resultado);
         // Redirigir según el resultado
         if ("success".equals(resultado)) {
             response.sendRedirect("exito.jsp");

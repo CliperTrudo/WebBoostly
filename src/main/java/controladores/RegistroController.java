@@ -82,7 +82,7 @@ public class RegistroController extends HttpServlet {
 				"Tu código de verificación es: " + codigoVerificacion);
 
 		// Redirigir a la página de verificación
-		response.sendRedirect("verificar.jsp");
+		response.sendRedirect("/webboostly/verificarCodigo");
 	}
 
 }

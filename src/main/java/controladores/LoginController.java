@@ -1,9 +1,7 @@
 package controladores;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-import dtos.MailContrasenyaRequestDto;
 import dtos.SesionDto;
 import dtos.UsuarioDto;
 import jakarta.servlet.RequestDispatcher;
@@ -43,10 +41,7 @@ public class LoginController extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 
-		MailContrasenyaRequestDto mailpass = new MailContrasenyaRequestDto(username, password);
-		System.out.println(mailpass.toString());
-		
-		UsuarioDto usuarioEncoradoDto = apiService.sendLoginData(mailpass, sesion);
+		UsuarioDto usuarioEncoradoDto = apiService.obtenerUsuarioPorEmail(username);
 	
 		
 		System.out.println("Contraseña ingresada: " + request.getParameter("password"));

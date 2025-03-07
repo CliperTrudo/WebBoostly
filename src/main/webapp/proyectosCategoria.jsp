@@ -164,7 +164,7 @@ body {
 
                         const cardLink = document.createElement("a");
                         cardLink.classList.add("btn", "btn-primary");
-                        cardLink.href = `proyecto.jsp?id=${proyecto.idProyecto}`;
+                        cardLink.href = "proyectoMostrar?id=" + proyecto.idProyecto;
                         cardLink.textContent = "Ver más";
 
                         // Ensamblar la tarjeta
