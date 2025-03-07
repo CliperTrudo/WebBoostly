@@ -9,7 +9,7 @@ WebBoostly es la interfaz web de la aplicación Boostly, diseñada para gestiona
 - **Maven**
 - **Servlet API 5.x**
 - **Tomcat 9.0+**
-- **ApiBoostly (como backend)**
+- **ApiBoostly (como Api de consultas a base de datos)**
 
 ---
 
