@@ -52,6 +52,7 @@
 </head>
 <body>
 
+	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="mainNav">
 		<div class="container">
@@ -68,13 +69,21 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
+
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
 							<li class="nav-item"><a class="nav-link"
 								href="/webboostly/cuenta">Cuenta</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="/webboostly/proyectosCategoria">Proyecto</a></li>
+
+							<!-- Verificamos si el usuario es administrador (rolUsuario = 2) -->
+							<c:if test="${sessionScope.datos.rolUsuario == 3}">
+								<li class="nav-item"><a class="nav-link"
+									href="/webboostly/admin">Admin</a></li>
+							</c:if>
 						</c:when>
+
 						<c:otherwise>
 							<li class="nav-item"><a class="nav-link"
 								href="/webboostly/login">Login</a></li>
@@ -108,17 +117,18 @@
 	</script>
 
 	<c:if
-		test="${not empty sessionScope.datos and sessionScope.datos.id eq proyecto.idUsuario}">
+		test="${not empty sessionScope.datos and (sessionScope.datos.id eq proyecto.idUsuario || sessionScope.datos.rolUsuario == 3)}">
 		<button
 			class="btn position-fixed top-50 end-0 translate-middle-y m-3 bg-success text-white"
-			onclick="window.location.href='/webboostly/editarProyecto?id=${proyecto.idProyecto}'">Editar
-			Proyecto</button>
+			onclick="window.location.href='/webboostly/editarProyecto?id=${proyecto.idProyecto}'">
+			Editar Proyecto</button>
 
 		<button
 			class="btn position-fixed bottom-0 start-0 m-3 bg-danger text-white"
 			onclick="confirmarEliminacion('${proyecto.idProyecto}')">
 			Eliminar Proyecto</button>
 	</c:if>
+
 
 	<div class="modal fade" id="confirmacionModal" tabindex="-1"
 		aria-labelledby="confirmacionModalLabel" aria-hidden="true">

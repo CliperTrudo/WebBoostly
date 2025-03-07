@@ -9,8 +9,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import servicios.ApiService;
 import dtos.ProyectoDto;
+import dtos.SesionDto;
 
 /**
  * Controlador encargado de mostrar los detalles de un proyecto.
@@ -37,6 +39,15 @@ public class ProyectoMostrarController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+    	HttpSession session = request.getSession();
+        SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
+        
+        if (sesionUsu == null) {
+            // Si no hay sesión iniciada, redirigir a la página de login
+            response.sendRedirect("login.jsp");
+            return;
+        }
+    	
         // Obtener el ID del proyecto desde la URL
         String idProyectoParam = request.getParameter("id");
         if (idProyectoParam == null || idProyectoParam.isEmpty()) {

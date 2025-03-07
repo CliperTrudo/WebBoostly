@@ -67,13 +67,24 @@ body {
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
+
 					<c:choose>
 						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link" href="/webboostly/cuenta">Cuenta</a></li>
-							<li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/cuenta">Cuenta</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/proyectosCategoria">Proyecto</a></li>
+
+							<!-- Verificamos si el usuario es administrador (rolUsuario = 2) -->
+							<c:if test="${sessionScope.datos.rolUsuario == 3}">
+								<li class="nav-item"><a class="nav-link"
+									href="/webboostly/admin">Admin</a></li>
+							</c:if>
 						</c:when>
+
 						<c:otherwise>
-							<li class="nav-item"><a class="nav-link" href="/webboostly/login">Login</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/webboostly/login">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

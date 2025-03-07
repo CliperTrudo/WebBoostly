@@ -125,12 +125,12 @@ public class ProyectoController extends HttpServlet {
         System.out.println(proyecto.toString());
 
         // Enviar el proyecto a la API para ser registrado
-        String resultado = apiService.registroProyecto(proyecto);
-        System.out.println("Resultado: " + resultado);
+        ProyectoDto proyectoResultado = apiService.registroProyecto(proyecto);
+        System.out.println("Resultado: " + proyectoResultado.toString());
 
         // Redirigir al usuario dependiendo del resultado
-        if ("success".equals(resultado)) {
-            response.sendRedirect("exito.jsp"); // Redirigir a la página de éxito si se crea el proyecto
+        if (proyectoResultado.getIdProyecto() != null) {
+            response.sendRedirect("proyectoMostrar?id="+ proyectoResultado.getIdProyecto()); // Redirigir a la página de éxito si se crea el proyecto
         } else {
             request.setAttribute("error", "No se pudo crear el proyecto. Inténtalo de nuevo.");
             request.getRequestDispatcher("error.jsp").forward(request, response); // Redirigir a la página de error

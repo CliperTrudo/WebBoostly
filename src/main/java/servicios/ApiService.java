@@ -156,13 +156,14 @@ public class ApiService {
      * @param proyectoDto El DTO que contiene los datos del proyecto a registrar.
      * @return La respuesta de la API en formato String.
      */
-    public String registroProyecto(ProyectoDto proyectoDto) {
+    public ProyectoDto registroProyecto(ProyectoDto proyectoDto) {
         try {
             String jsonInput = mapper.writeValueAsString(proyectoDto);
-            return sendHttpRequest(API_BASE_URL + "/proyectos", "POST", jsonInput);
+            String response = sendHttpRequest(API_BASE_URL + "/proyectos", "POST", jsonInput);
+            return response != null ? mapper.readValue(response, ProyectoDto.class) : null;
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return null;
         }
     }
 

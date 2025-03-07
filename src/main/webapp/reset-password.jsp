@@ -12,6 +12,11 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
   <main class="flex-grow-1">
+    <!-- Enlace para volver -->
+    <div class="container mt-3 d-flex justify-content-end">
+      <a href="/webboostly" class="btn btn-link">Volver</a>
+    </div>
+    
     <section class="d-flex align-items-start justify-content-center" style="min-height: calc(100vh - 60px); padding-top: 20vh;">
       <div class="container">
         <div class="row justify-content-center">
