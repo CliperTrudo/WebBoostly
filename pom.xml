@@ -25,6 +25,10 @@
 	    <plugin>
 	      <artifactId>maven-war-plugin</artifactId>
 	      <version>3.2.3</version>
+	      <configuration>
+        	<!-- Con esto no exige web.xml -->
+	        <failOnMissingWebXml>false</failOnMissingWebXml>
+	      </configuration>
 	    </plugin>
 	  </plugins>
 	</build>
