@@ -108,7 +108,7 @@
 
 								</form>
 
-								<a href="http://localhost:8080/webboostly/login/google"
+								<a href="/webboostly/login/google"
 									class="btn google-login-btn w-100 d-flex align-items-center justify-content-center">
 									<img
 									src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"

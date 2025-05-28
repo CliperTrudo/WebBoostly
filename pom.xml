@@ -39,6 +39,17 @@
 	</repositories>
 	<dependencies>
 		<dependency>
+		  <groupId>io.github.cdimascio</groupId>
+		  <artifactId>dotenv-java</artifactId>
+		  <version>2.2.0</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>com.paypal.sdk</groupId>
+		  <artifactId>checkout-sdk</artifactId>
+		  <version>2.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
 			<version>1.34.0</version>
@@ -102,11 +113,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.15.0</version>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.15.2</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>

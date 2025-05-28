@@ -190,7 +190,14 @@
 						<li><strong>Usuario:</strong> ${proyecto.idUsuario}</li>
 						<li><strong>Meta de Recaudación:</strong>
 							${proyecto.metaRecaudacionProyecto}</li>
+
 					</ul>
+					<!-- Contenedor centrado -->
+					<div class="text-center mt-3">
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#donationModal">
+							Realizar una donacion</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -255,5 +262,41 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
+	<!-- Modal de Donación -->
+	<div class="modal fade" id="donationModal" tabindex="-1"
+		aria-labelledby="donationModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="donationModalLabel">Donar al
+						proyecto</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Explicación All or Nothing -->
+					<p class="small text-muted mb-4">
+						Esta campaña funciona bajo el modelo <strong>“todo o
+							nada”</strong>: tu donación solo se cobrará si el proyecto alcanza su meta
+						de recaudación. Hasta entonces, no se efectuará ningún cargo.
+					</p>
+					<form action="${pageContext.request.contextPath}/create-order"
+						method="post">
+						<div class="mb-3">
+							<label for="amount" class="form-label"> Importe (EUR): </label> <input
+								type="text" class="form-control" id="amount" name="amount"
+								value="10.00" />
+						</div>
+						<button type="submit" class="btn btn-primary d-block mx-auto mt-3" 
+						style="background-color:#003087; border-color:#003087; color:#fff;">
+							<i class="fab fa-paypal me-2"></i>Donar con PayPal
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </body>
 </html>
