@@ -43,7 +43,7 @@ public class LoginGoogleController extends HttpServlet {
     // Las credenciales de la API de Google (deben ser protegidas)
     private static final String CLIENT_ID = "88643632417-723j5j8kmo55lmoqm6fr8n9pe8btn4qt.apps.googleusercontent.com"; 
     private static final String CLIENT_SECRET = "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"; 
-    private static final String REDIRECT_URI = "http://localhost:8080/webboostly/login/google"; 
+    private static final String REDIRECT_URI = "https://port.clipertrucado.com/webboostly/login/google"; 
 
     private ApiService apiService = new ApiService(); // Servicio para interactuar con la API y la base de datos
 
