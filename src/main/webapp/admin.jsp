@@ -132,7 +132,8 @@ List<UsuarioDto> usuarios = (List<UsuarioDto>) request.getAttribute("usuarios");
 												</c:forEach>
 											</c:when>
 											<c:otherwise>
-												<li class="list-group-item text-center text-muted">No hay roles.</li>
+												<li class="list-group-item text-center text-muted">No
+													hay roles.</li>
 											</c:otherwise>
 										</c:choose>
 									</select>
@@ -148,12 +149,12 @@ List<UsuarioDto> usuarios = (List<UsuarioDto>) request.getAttribute("usuarios");
 			</div>
 
 			<!-- Card 2: Listado de usuarios -->
+			<!-- Card de Listado -->
 			<div class="col-12 col-lg-6">
 				<div class="card shadow-sm fixed-card d-flex flex-column">
 					<div class="card-header">
 						<h5 class="mb-0">Listado de usuarios</h5>
 					</div>
-					<!-- Scroll interno para el listado -->
 					<div class="scroll-body flex-fill">
 						<ul class="list-group list-group-flush">
 							<c:choose>
@@ -162,12 +163,20 @@ List<UsuarioDto> usuarios = (List<UsuarioDto>) request.getAttribute("usuarios");
 										<li
 											class="list-group-item d-flex justify-content-between align-items-center">
 											<div>
-												<span class="text-uppercase text-muted small">ROL
-													${u.rol}</span><br> <strong>${u.nombreUsuario}
+												<!-- Mostrar nombreRol buscando en la lista de roles -->
+												<span class="text-uppercase text-muted small"> 
+													
+												</span><br> <strong>${u.nombreUsuario}
 													${u.apellidosUsuario}</strong><br> <small class="text-muted">${u.mailUsuario}</small>
 											</div>
 											<div class="d-flex align-items-center gap-2">
-												<span class="badge bg-primary">R${u.rol}</span>
+												<span class="badge bg-primary"> 
+												<c:forEach var="r" items="${roles}">
+														<c:if test="${r.idRol == u.rol}">
+                             								 ${r.nombreRol}
+                            							</c:if>
+													</c:forEach>
+												</span>
 												<button class="btn btn-sm btn-light">
 													<i class="fas fa-ellipsis-v"></i>
 												</button>

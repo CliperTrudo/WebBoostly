@@ -246,9 +246,9 @@ public class ApiService {
 
                 // Extraer solo el ID de rol
                 JsonNode rolNode = node.get("rol");
-                if (rolNode != null && rolNode.has("id")) {
-                	System.out.println(rolNode.get("id").asText().toString());
-                    u.setRol(rolNode.get("id").asLong());
+                if (rolNode != null && rolNode.has("idRol")) {
+                    u.setRol(rolNode.get("idRol").asLong());
+               
                 }
 
                 u.setGoogleUsuario(node.path("googleUsuario").asBoolean(false));
