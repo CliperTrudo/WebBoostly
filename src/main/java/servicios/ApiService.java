@@ -5,14 +5,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import dtos.ProyectoDto;
+import dtos.RolDto;
 import dtos.UsuarioDto;
 
 /**
@@ -196,6 +202,72 @@ public class ApiService {
             return null;
         }
     }
+    
+    public List<UsuarioDto> obtenerUsuarios() {
+        try {
+            String response = sendHttpRequest(API_BASE_URL + "/usuarios", "GET", null);
+            if (response == null) {
+                return Collections.emptyList();
+            }
+
+            // Primero parseamos a árbol
+            JsonNode root = mapper.readTree(response);
+            List<UsuarioDto> lista = new ArrayList<>();
+
+            for (JsonNode node : root) {
+                UsuarioDto u = new UsuarioDto();
+                
+                u.setId(node.get("id").asLong());
+                u.setNombreUsuario(node.path("nombreUsuario").asText(null));
+                u.setApellidosUsuario(node.path("apellidosUsuario").asText(null));
+                u.setMailUsuario(node.path("mailUsuario").asText(null));
+
+                // Fecha de nacimiento
+                if (node.hasNonNull("fechaNacimientoUsuario")) {
+                    Date fn = Date.valueOf(node.get("fechaNacimientoUsuario").asText());
+                    u.setFechaNacimientoUsuario(fn);
+                }
+
+                u.setNicknameUsuario(node.path("nicknameUsuario").asText(null));
+                u.setContrasenyaUsuario(node.path("contrasenyaUsuario").asText(null));
+
+                // Fecha alta
+                if (node.hasNonNull("fechaAltaUsuario")) {
+                    Date fa = Date.valueOf(node.get("fechaAltaUsuario").asText());
+                    u.setFechaAltaUsuario(fa);
+                }
+
+                u.setDescripcionUsuario(node.path("descripcionUsuario").asText(null));
+                u.setDniUsuario(node.path("dniUsuario").asText(null));
+                u.setTelefonoUsuario(node.path("telefonoUsuario").asText(null));
+
+                // imgUsuario lo dejamos nulo o lo parseas si tu API devuelve base64
+                u.setImgUsuario(null);
+
+                // Extraer solo el ID de rol
+                JsonNode rolNode = node.get("rol");
+                if (rolNode != null && rolNode.has("id")) {
+                	System.out.println(rolNode.get("id").asText().toString());
+                    u.setRol(rolNode.get("id").asLong());
+                }
+
+                u.setGoogleUsuario(node.path("googleUsuario").asBoolean(false));
+                u.setTokenRecuperacion(node.path("tokenRecuperacion").asText(null));
+
+                if (node.hasNonNull("tokenExpiracion")) {
+                    u.setTokenExpiracion(Timestamp.valueOf(node.get("tokenExpiracion").asText()));
+                }
+                
+                lista.add(u);
+            }
+
+            return lista;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
 
     /**
      * Registra un usuario en la base de datos.
@@ -209,6 +281,17 @@ public class ApiService {
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
+        }
+    }
+    
+    public List<RolDto> obtenerRoles() {
+        try {
+            
+            String response = sendHttpRequest(API_BASE_URL + "/roles", "GET", null);
+            return response != null ? Arrays.asList(mapper.readValue(response, RolDto[].class)) : null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

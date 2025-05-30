@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import dtos.ProyectoDto;
+import dtos.RolDto;
 import dtos.SesionDto;
 import dtos.UsuarioDto;
 import jakarta.servlet.RequestDispatcher;
@@ -57,22 +58,26 @@ public class AdminController extends HttpServlet {
             long idUsuario = sesionUsu.getId();
             
             // Obtener los datos del usuario y los proyectos asociados a él
-            UsuarioDto usuario = apiService.obtenerUsuarioPorId(idUsuario);
+            List<UsuarioDto> usuarios = apiService.obtenerUsuarios();
+            List<RolDto> roles = apiService.obtenerRoles();
             List<ProyectoDto> proyecto = apiService.obtenerProyectosPorUsuario(idUsuario);
-            
-            // Si el usuario existe, pasar los datos a la vista
-            if (usuario != null) {
-                System.out.println(usuario.toString());
+            System.out.println("listado en el controlador:");
+            for(UsuarioDto cadena :usuarios) {
+                System.out.println(cadena.toString());
+            }
+            // Si la lista tiene usuarios, pasar los datos a la vista
+            if (usuarios != null) {
                 // Establecer los atributos para ser usados en la vista
-                request.setAttribute("usuario", usuario);
+                request.setAttribute("usuarios", usuarios);
                 request.setAttribute("proyectos", proyecto);
+                request.setAttribute("roles", roles);
                 
                 // Redirigir a la vista "usuario.jsp" para mostrar los datos
-                RequestDispatcher dispatcher = request.getRequestDispatcher("usuario.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
                 dispatcher.forward(request, response);
             } else {
                 // Si el usuario no se encuentra, mostrar un error
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Usuario no encontrado");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "No hay usuarios");
             }
         } catch (Exception e) {
             // Manejar errores y enviar un mensaje de error

@@ -1,251 +1,195 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="dtos.UsuarioDto"%>
-<%@ page import="dtos.ProyectoDto"%>
-<%@ page import="java.util.List"%>
+<%@ page import="dtos.UsuarioDto, java.util.List"%>
+<%
+// En tu controlador:
+// request.setAttribute("usuarios", listaDeUsuarios);
+List<UsuarioDto> usuarios = (List<UsuarioDto>) request.getAttribute("usuarios");
+%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="utf-8" />
+<meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>Agency - Start Bootstrap Theme</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-	crossorigin="anonymous"></script>
-<!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css" />
+<title>Panel de Administración</title>
+
+<!-- Bootstrap CSS -->
 <link
-	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
-	rel="stylesheet" type="text/css" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous" />
+
 <style>
-body {
-	background-image: url('./assets/img/fondoExagonos.jpg');
-	background-size: cover;
-	/* Ajusta la imagen para cubrir toda la pantalla */
-	background-position: center; /* Centra la imagen */
-	background-repeat: no-repeat; /* Evita que la imagen se repita */
+/* Ambos cards tienen la misma altura */
+.fixed-card {
+	height: 700px; /* Ajusta según la altura real de tu formulario */
 }
-
-.profile-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
-	padding: 20px;
-}
-
-.profile-card {
-	width: 100%;
-	max-width: 500px;
-	background: white;
-	border-radius: 15px;
-	padding: 20px;
-	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-	text-align: center;
-}
-
-.profile-img {
-	width: 150px;
-	height: 150px;
-	object-fit: cover;
-	border-radius: 50%;
-	border: 4px solid #007bff;
-}
-
-.profile-card h3 {
-	margin-top: 15px;
-	font-size: 1.8rem;
-	color: #007bff;
-}
-
-.profile-card p {
-	margin: 5px 0;
-	font-size: 1.1rem;
-}
-
-.btn-custom {
-	margin-top: 15px;
-	background: #007bff;
-	border: none;
-	padding: 10px 20px;
-	font-size: 1rem;
-	border-radius: 30px;
-	color: white;
-	font-weight: bold;
-	transition: all 0.3s ease;
-}
-
-.btn-custom:hover {
-	background: #0056b3;
+/* Scroll interno para el listado */
+.fixed-card .scroll-body {
+	height: calc(100% - 56px);
+	/* Restar altura del header de la card (~56px) */
+	overflow-y: auto;
+	padding: 0;
 }
 </style>
 </head>
-<body id="page-top">
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-		id="mainNav">
+<body class="bg-light">
+
+	<!-- Navbar -->
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
 		<div class="container">
-			<a class="navbar-brand" href="#page-top"> <img
-				src="assets/img/logoo.png" alt="Logo"
-				style="height: 30%; width: 30%;" />
-			</a>
+			<a class="navbar-brand" href="#">Mi Panel</a>
 			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
+				data-bs-toggle="collapse" data-bs-target="#navMenu"
+				aria-controls="navMenu" aria-expanded="false"
 				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars ms-1"></i>
+				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
-
-					<c:choose>
-						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/cuenta">Cuenta</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/proyectosCategoria">Proyecto</a></li>
-
-							<!-- Verificamos si el usuario es administrador (rolUsuario = 2) -->
-							<c:if test="${sessionScope.datos.rolUsuario == 3}">
-								<li class="nav-item"><a class="nav-link"
-									href="/webboostly/admin">Admin</a></li>
-							</c:if>
-						</c:when>
-
-						<c:otherwise>
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/login">Login</a></li>
-						</c:otherwise>
-					</c:choose>
+			<div class="collapse navbar-collapse" id="navMenu">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Preguntas</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#">Administración</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Cerrar
+							sesión</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
+	<!-- Contenedor principal -->
+	<div class="container my-5">
+		<h2 class="mb-4 text-center">Panel de Administración</h2>
 
-	<%
-	UsuarioDto usuario = (UsuarioDto) request.getAttribute("usuario");
-	%>
-	<%
-	List<ProyectoDto> proyectos = (List<ProyectoDto>) request.getAttribute("proyectos");
-	%>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="container mt-5">
-		<div class="row d-flex justify-content-between align-items-stretch">
-			<!-- Card del usuario -->
-			<div class="col-md-5">
-				<div class="card h-100">
-					<div class="card-body text-center">
-						<img
-							src="<%=(usuario != null && usuario.getImgUsuario() != null)
-		? "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(usuario.getImgUsuario())
-		: "https://img.freepik.com/vector-premium/icono-perfil-avatar-predeterminado-imagen-usuario-redes-sociales-icono-avatar-gris-silueta-perfil-blanco-ilustracion-vectorial_561158-3383.jpg?semt=ais_hybrid"%>"
-							class="profile-img mb-3 img-fluid rounded-circle"
-							alt="Imagen de Usuario">
-						<h3><%=(usuario != null) ? usuario.getNombreUsuario() + " " + usuario.getApellidosUsuario()
-		: "Usuario no identificado"%></h3>
-						<p class="text-muted">
-							@<%=(usuario != null) ? usuario.getNicknameUsuario() : "Sin nickname"%></p>
-						<p>
-							<strong>Correo:</strong>
-							<%=(usuario != null) ? usuario.getMailUsuario() : "No disponible"%></p>
-						<p>
-							<strong>Fecha de Nacimiento:</strong>
-							<%=(usuario != null) ? usuario.getFechaNacimientoUsuario() : "No disponible"%></p>
-						<p>
-							<strong>Teléfono:</strong>
-							<%=(usuario != null) ? usuario.getTelefonoUsuario() : "No disponible"%></p>
-						<p>
-							<strong>DNI:</strong>
-							<%=(usuario != null) ? usuario.getDniUsuario() : "No disponible"%></p>
-						<p>
-							<strong>Descripción:</strong>
-							<%=(usuario != null) ? usuario.getDescripcionUsuario() : "No disponible"%></p>
-						<p>
-							<strong>Fecha de Alta:</strong>
-							<%=(usuario != null) ? usuario.getFechaAltaUsuario() : "No disponible"%></p>
-
-						<a href="#" class="btn btn-primary">Editar Perfil</a>
+		<div class="row gx-4 gy-4">
+			<!-- Card 1: Dar de alta usuario -->
+			<div class="col-12 col-lg-6">
+				<div class="card shadow-sm fixed-card d-flex flex-column">
+					<div class="card-header">
+						<h5 class="mb-0">Dar de alta usuario</h5>
+					</div>
+					<div class="card-body overflow-auto">
+						<form
+							action="${pageContext.request.contextPath}/admin/crearUsuario"
+							method="post">
+							<div class="row gx-3">
+								<div class="col-md-6 mb-3">
+									<label for="nombre_usuario" class="form-label">Nombre</label> <input
+										type="text" id="nombre_usuario" name="nombre_usuario"
+										class="form-control" placeholder="Nombre" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="apellidos_usuario" class="form-label">Apellidos</label>
+									<input type="text" id="apellidos_usuario"
+										name="apellidos_usuario" class="form-control"
+										placeholder="Apellidos" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="mail_usuario" class="form-label">Email</label> <input
+										type="email" id="mail_usuario" name="mail_usuario"
+										class="form-control" placeholder="email@dominio.com" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="fecha_nacimiento_usuario" class="form-label">Fecha
+										de Nacimiento</label> <input type="date" id="fecha_nacimiento_usuario"
+										name="fecha_nacimiento_usuario" class="form-control" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="nickname_usuario" class="form-label">Nickname</label>
+									<input type="text" id="nickname_usuario"
+										name="nickname_usuario" class="form-control"
+										placeholder="Alias de usuario" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="contrasenya_usuario" class="form-label">Contraseña</label>
+									<input type="password" id="contrasenya_usuario"
+										name="contrasenya_usuario" class="form-control" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="dni_usuario" class="form-label">DNI</label> <input
+										type="text" id="dni_usuario" name="dni_usuario"
+										class="form-control" placeholder="12345678A" required>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="telefono_usuario" class="form-label">Teléfono</label>
+									<input type="tel" id="telefono_usuario" name="telefono_usuario"
+										class="form-control" placeholder="612345678" required>
+								</div>
+								<div class="col-12 mb-3">
+									<label for="descripcion_usuario" class="form-label">Descripción</label>
+									<textarea id="descripcion_usuario" name="descripcion_usuario"
+										class="form-control" rows="3" placeholder="Breve descripción"></textarea>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="rol" class="form-label">Rol</label> <select
+										id="rol" name="rol" class="form-select" required>
+										<option value="">-- Selecciona rol --</option>
+										<c:choose>
+											<c:when test="${not empty roles}">
+												<c:forEach var="r" items="${roles}">
+													<option value="${r.idRol}">${r.nombreRol}</option>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<li class="list-group-item text-center text-muted">No hay roles.</li>
+											</c:otherwise>
+										</c:choose>
+									</select>
+								</div>
+								<div class="col-md-6 d-flex align-items-end mb-3">
+									<button type="submit" class="btn btn-success w-100">
+										Crear usuario</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 
-			<!-- Card de Proyectos -->
-			<div class="col-md-5">
-				<div class="card h-100">
-					<div class="card-body">
-						<h3>Proyectos</h3>
-						<div class="list-group" id="myList" role="tablist">
-							<%
-							if (proyectos != null && !proyectos.isEmpty()) {
-							%>
-							<%
-							for (ProyectoDto proyecto : proyectos) {
-							%>
-							<a class="list-group-item list-group-item-action"
-								data-toggle="list" href="proyectoMostrar?id=<%=proyecto.getIdProyecto()%>" role="tab"><%=proyecto.getNombreProyecto()%></a>
-							
-							<%
-							}
-							%>
-							<%
-							} else {
-							%>
-							<a>No hay proyectos asociados a
-								este usuario.</a>
-							<%
-							}
-							%>
-						</div>
+			<!-- Card 2: Listado de usuarios -->
+			<div class="col-12 col-lg-6">
+				<div class="card shadow-sm fixed-card d-flex flex-column">
+					<div class="card-header">
+						<h5 class="mb-0">Listado de usuarios</h5>
+					</div>
+					<!-- Scroll interno para el listado -->
+					<div class="scroll-body flex-fill">
+						<ul class="list-group list-group-flush">
+							<c:choose>
+								<c:when test="${not empty usuarios}">
+									<c:forEach var="u" items="${usuarios}">
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<div>
+												<span class="text-uppercase text-muted small">ROL
+													${u.rol}</span><br> <strong>${u.nombreUsuario}
+													${u.apellidosUsuario}</strong><br> <small class="text-muted">${u.mailUsuario}</small>
+											</div>
+											<div class="d-flex align-items-center gap-2">
+												<span class="badge bg-primary">R${u.rol}</span>
+												<button class="btn btn-sm btn-light">
+													<i class="fas fa-ellipsis-v"></i>
+												</button>
+											</div>
+										</li>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<li class="list-group-item text-center text-muted">No hay
+										usuarios registrados.</li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-
-
-	<!-- Footer-->
-	<footer class="footer py-4 mt-5">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-4 text-lg-start">Copyright &copy; Your
-					Website 2023</div>
-				<div class="col-lg-4 my-3 my-lg-0 text-center">
-					<a class="btn btn-dark btn-social mx-2" href="#!"
-						aria-label="Twitter"> <i class="fab fa-twitter"></i>
-					</a> <a class="btn btn-dark btn-social mx-2" href="#!"
-						aria-label="Facebook"> <i class="fab fa-facebook-f"></i>
-					</a> <a class="btn btn-dark btn-social mx-2" href="#!"
-						aria-label="LinkedIn"> <i class="fab fa-linkedin-in"></i>
-					</a>
-				</div>
-				<div class="col-lg-4 text-lg-end">
-					<a class="link-dark text-decoration-none me-3" href="#!">Privacy
-						Policy</a> <a class="link-dark text-decoration-none" href="#!">Terms
-						of Use</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<!-- Bootstrap core JS-->
+	<!-- Bootstrap JS Bundle -->
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Core theme JS-->
-	<script src="js/scripts.js"></script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
 </body>
 </html>
