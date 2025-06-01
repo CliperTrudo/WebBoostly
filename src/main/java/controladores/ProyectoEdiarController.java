@@ -72,7 +72,7 @@ public class ProyectoEdiarController extends HttpServlet {
             ProyectoDto proyecto = apiService.obtenerProyectoPorId(idProyecto); // Obtener el proyecto desde la base de datos
 
             // Verificar si el proyecto existe y pertenece al usuario autenticado
-            if (proyecto != null && proyecto.getIdUsuario().equals(sesionUsu.getId())) {
+            if (proyecto != null && (proyecto.getIdUsuario().equals(sesionUsu.getId()) || sesionUsu.getRolUsuario() == 3 )) {
                 System.out.println(proyecto.toString());
                 request.setAttribute("proyecto", proyecto);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("./editarProyecto.jsp");

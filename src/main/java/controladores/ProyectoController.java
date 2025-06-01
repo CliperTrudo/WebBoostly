@@ -74,66 +74,67 @@ public class ProyectoController extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("Entramos en la creación del proyecto");
 
-        // Crear el objeto ProyectoDto
+        // 1️⃣ Crear el objeto ProyectoDto y completar sus campos
         ProyectoDto proyecto = new ProyectoDto();
 
-        // Obtener la sesión para el idUsuario
         HttpSession session = request.getSession();
         SesionDto sesionUsu = (SesionDto) session.getAttribute("datos");
-        System.out.println(sesionUsu.toString());
-        Long idUsuario = null;
-        
-        // Verificar si la sesión está activa y obtener el ID del usuario
-        if (sesionUsu != null && sesionUsu.getId() != null) {
-            idUsuario = sesionUsu.getId();
-        } else {
+        if (sesionUsu == null || sesionUsu.getId() == null) {
+            // No hay sesión válida → volvemos al login
             System.out.println("Sesión no iniciada.");
-            response.sendRedirect("/webboostly/login"); // Redirige al login si no hay sesión
+            response.sendRedirect("/webboostly/login");
             return;
         }
-        
+        Long idUsuario = sesionUsu.getId();
         proyecto.setIdUsuario(idUsuario);
 
-        // Asignar valores del formulario al objeto ProyectoDto
         proyecto.setNombreProyecto(request.getParameter("nombreProyecto"));
         proyecto.setDescripcionProyecto(request.getParameter("descripcionProyecto"));
+        proyecto.setImagen1Proyecto(
+            request.getPart("imagen1Proyecto") != null && request.getPart("imagen1Proyecto").getSize() > 0
+                ? request.getPart("imagen1Proyecto").getInputStream().readAllBytes()
+                : null
+        );
+        proyecto.setImagen2Proyecto(
+            request.getPart("imagen2Proyecto") != null && request.getPart("imagen2Proyecto").getSize() > 0
+                ? request.getPart("imagen2Proyecto").getInputStream().readAllBytes()
+                : null
+        );
+        proyecto.setImagen3Proyecto(
+            request.getPart("imagen3Proyecto") != null && request.getPart("imagen3Proyecto").getSize() > 0
+                ? request.getPart("imagen3Proyecto").getInputStream().readAllBytes()
+                : null
+        );
 
-        // Manejar imágenes como byte[]
-        proyecto.setImagen1Proyecto(request.getPart("imagen1Proyecto") != null && request.getPart("imagen1Proyecto").getSize() > 0 
-            ? request.getPart("imagen1Proyecto").getInputStream().readAllBytes() : null);
-        proyecto.setImagen2Proyecto(request.getPart("imagen2Proyecto") != null && request.getPart("imagen2Proyecto").getSize() > 0 
-            ? request.getPart("imagen2Proyecto").getInputStream().readAllBytes() : null);
-        proyecto.setImagen3Proyecto(request.getPart("imagen3Proyecto") != null && request.getPart("imagen3Proyecto").getSize() > 0 
-            ? request.getPart("imagen3Proyecto").getInputStream().readAllBytes() : null);
-
-        // Establecer fecha de inicio como la fecha actual
         proyecto.setFechaInicioProyecto(LocalDateTime.now());
 
-        // Obtener la fecha de finalización desde el formulario
         String fechaFinalizacionStr = request.getParameter("fechaFinalizacionProyecto");
         proyecto.setFechaFinalizacionProyecto(LocalDate.parse(fechaFinalizacionStr));
 
-        // Asignar la meta de recaudación
-        proyecto.setMetaRecaudacionProyecto(Double.parseDouble(request.getParameter("metaRecaudacionProyecto")));
+        proyecto.setMetaRecaudacionProyecto(
+            Double.parseDouble(request.getParameter("metaRecaudacionProyecto"))
+        );
 
-        // Establecer el estado del proyecto como activo por defecto
-        proyecto.setEstadoProyecto(true);
+        // Fijas el estado por defecto (activo = 2)
+        proyecto.setIdEstado(Long.valueOf(2));
 
-        // Asignar la categoría seleccionada
         proyecto.setIdCategoria(Long.parseLong(request.getParameter("categoriaProyecto")));
 
-        System.out.println(proyecto.toString());
+        System.out.println("DTO enviado a API: " + proyecto.toString());
 
-        // Enviar el proyecto a la API para ser registrado
+        // 2️⃣ Llamar al servicio para registrar el proyecto
         ProyectoDto proyectoResultado = apiService.registroProyecto(proyecto);
-        System.out.println("Resultado: " + proyectoResultado.toString());
 
-        // Redirigir al usuario dependiendo del resultado
-        if (proyectoResultado.getIdProyecto() != null) {
-            response.sendRedirect("proyectoMostrar?id="+ proyectoResultado.getIdProyecto()); // Redirigir a la página de éxito si se crea el proyecto
+        // 3️⃣ Comprobar que no sea null antes de usar toString() o acceder a sus campos
+        if (proyectoResultado != null && proyectoResultado.getIdProyecto() != null) {
+            // Si todo fue bien, redirigimos a la página de mostrar proyecto
+            System.out.println("Proyecto creado con éxito: " + proyectoResultado.toString());
+            response.sendRedirect("proyectoMostrar?id=" + proyectoResultado.getIdProyecto());
         } else {
+            // Si devuelve null, significa que algo falló en la API o no se devolvió un objeto válido
+            System.out.println("ERROR: registroProyecto devolvió null.");
             request.setAttribute("error", "No se pudo crear el proyecto. Inténtalo de nuevo.");
-            request.getRequestDispatcher("error.jsp").forward(request, response); // Redirigir a la página de error
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

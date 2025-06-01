@@ -60,16 +60,20 @@ public class AdminController extends HttpServlet {
             // Obtener los datos del usuario y los proyectos asociados a él
             List<UsuarioDto> usuarios = apiService.obtenerUsuarios();
             List<RolDto> roles = apiService.obtenerRoles();
-            List<ProyectoDto> proyecto = apiService.obtenerProyectosPorUsuario(idUsuario);
+            List<ProyectoDto> proyectos = apiService.obtenerProyectos();
             System.out.println("listado en el controlador:");
             for(UsuarioDto cadena :usuarios) {
+                System.out.println(cadena.toString());
+            }
+            System.out.println("respuesta de la api: " + proyectos);
+            for(ProyectoDto cadena :proyectos) {
                 System.out.println(cadena.toString());
             }
             // Si la lista tiene usuarios, pasar los datos a la vista
             if (usuarios != null) {
                 // Establecer los atributos para ser usados en la vista
                 request.setAttribute("usuarios", usuarios);
-                request.setAttribute("proyectos", proyecto);
+                request.setAttribute("proyectos", proyectos);
                 request.setAttribute("roles", roles);
                 
                 // Redirigir a la vista "usuario.jsp" para mostrar los datos

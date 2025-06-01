@@ -178,7 +178,7 @@ body {
 							<strong>Fecha de Alta:</strong>
 							<%=(usuario != null) ? usuario.getFechaAltaUsuario() : "No disponible"%></p>
 
-						<a href="#" class="btn btn-primary">Editar Perfil</a>
+						<a href="/webboostly/editarUsuario?id=<%=usuario.getId()%>" class="btn btn-primary">Editar Perfil</a>
 					</div>
 				</div>
 			</div>
