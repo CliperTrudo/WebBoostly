@@ -27,7 +27,8 @@ public class ProyectosCategoriaController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+			throws ServletException, IOException {
+		try {
         // Obtener el ID de la categoría desde la URL
         String idCategoriaStr = request.getParameter("id");
 
@@ -38,7 +39,7 @@ public class ProyectosCategoriaController extends HttpServlet {
             return;
         }
 
-        try {
+        
             Long idCategoria = Long.parseLong(idCategoriaStr);
 
             // 1) Obtener todos los proyectos de la categoría

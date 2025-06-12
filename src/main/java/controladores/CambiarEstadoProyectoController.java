@@ -25,6 +25,8 @@ public class CambiarEstadoProyectoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	try {
         // 1. Verificar que haya sesión y que el usuario sea Admin (rol = 3)
         HttpSession session = request.getSession(false);
         SesionDto sesion = (session != null) ? (SesionDto) session.getAttribute("datos") : null;
@@ -60,5 +62,11 @@ public class CambiarEstadoProyectoController extends HttpServlet {
 
         // 6. Redirigir de vuelta a /admin para recargar el panel
         response.sendRedirect(request.getContextPath() + "/admin");
+    	} catch (Exception e) {
+            e.printStackTrace();
+        // si llegas aquí, hubo un fallo
+        request.setAttribute("error", "se produjo un error, intentelo mas tarde");
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
     }
 }

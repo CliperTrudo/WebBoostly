@@ -63,7 +63,8 @@ public class RegistroController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Crear un nuevo objeto UsuarioDto para almacenar los datos del usuario
+    	try {
+    	// Crear un nuevo objeto UsuarioDto para almacenar los datos del usuario
         UsuarioDto usuario = new UsuarioDto();
 
         // Asignar los valores recogidos del formulario usando setters
@@ -112,5 +113,12 @@ public class RegistroController extends HttpServlet {
 
         // Redirigir a la página de verificación
         response.sendRedirect("/webboostly/verificarCodigo");
+        
+    	} catch (Exception e) {
+            e.printStackTrace();
+        // si llegas aquí, hubo un fallo
+        request.setAttribute("error", "se produjo un error, intentelo mas tarde");
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
     }
 }

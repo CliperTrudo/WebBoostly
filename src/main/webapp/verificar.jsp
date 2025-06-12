@@ -52,7 +52,7 @@
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-light">
         <div class="container d-flex justify-content-between">
             <div class="col-md-4 d-flex align-items-center">
-                <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2025 BOOSTLY</span>
             </div>
         </div>
     </footer>

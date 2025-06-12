@@ -43,6 +43,7 @@ public class ProyectoEdiarController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	try {
         System.out.println("Hola");
 
         // Obtener la sesión del usuario
@@ -67,7 +68,7 @@ public class ProyectoEdiarController extends HttpServlet {
             return;
         }
 
-        try {
+       
             Long idProyecto = Long.parseLong(idProyectoParam);
             ProyectoDto proyecto = apiService.obtenerProyectoPorId(idProyecto); // Obtener el proyecto desde la base de datos
 
@@ -87,6 +88,7 @@ public class ProyectoEdiarController extends HttpServlet {
             response.sendRedirect("/webboostly/cuenta"); // Redirige si hay un error al procesar el ID del proyecto
             return;
         }
+        
     }
 
     /**

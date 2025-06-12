@@ -66,7 +66,7 @@
             <use xlink:href="#bootstrap"></use>
           </svg>
         </a>
-        <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 BOOSTLY</span>
       </div>
     </div>
   </footer>

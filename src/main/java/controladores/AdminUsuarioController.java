@@ -46,6 +46,7 @@ public class AdminUsuarioController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	try {
         // 1) Construir el DTO con los parámetros del formulario
         UsuarioDto usuario = new UsuarioDto();
         usuario.setNombreUsuario(request.getParameter("nombre_usuario"));
@@ -81,8 +82,10 @@ public class AdminUsuarioController extends HttpServlet {
 
         // 2) Invocar al servicio de API para crear el usuario
         String jsonResult = apiService.registroUsuario(usuario);
+        
+    	
         // parsear JSON
-        try {
+        
             JsonNode resultNode = new ObjectMapper().readTree(jsonResult);
             if (resultNode.has("id")) {
                 // registro OK
@@ -91,11 +94,12 @@ public class AdminUsuarioController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
         // si llegas aquí, hubo un fallo
         request.setAttribute("error", "No se pudo crear el usuario.");
         request.getRequestDispatcher("/admin.jsp").forward(request, response);
+        }
+
+        
     
     }
 }
