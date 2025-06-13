@@ -43,47 +43,41 @@
 </head>
 <body id="page-top">
     <!-- NAVBAR -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-		id="mainNav">
-		<div class="container">
-			<a class="navbar-brand" href="#page-top"> <img
-				src="assets/img/logoo.png" alt="Logo"
-				style="height: 30%; width: 30%;" />
-			</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars ms-1"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-					<li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
-					<c:choose>
-						<c:when test="${not empty sessionScope.datos}">
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/cuenta">Cuenta</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/proyectosCategoria">Proyecto</a></li>
-							<c:if test="${sessionScope.datos.rolUsuario == 3}">
-								<li class="nav-item"><a class="nav-link"
-									href="/webboostly/admin">Admin</a></li>
-							</c:if>
-						</c:when>
-						<c:otherwise>
-							<li class="nav-item"><a class="nav-link"
-								href="/webboostly/login">Login</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">
+                <img src="assets/img/logoo.png" alt="Logo" style="height: 30%; width: 30%;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fas fa-bars ms-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/webboostly/">Inicio</a></li>
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.datos}">
+                            <li class="nav-item"><a class="nav-link" href="/webboostly/cuenta">Cuenta</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/webboostly/proyectosCategoria">Proyecto</a></li>
+                            <c:if test="${sessionScope.datos.rolUsuario == 3}">
+                                <li class="nav-item"><a class="nav-link" href="/webboostly/admin">Admin</a></li>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item"><a class="nav-link" href="/webboostly/login">Login</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="fmProyecto">
         <div class="containerform mt-5">
             <h2 class="text-center"><i class="fas fa-folder-plus"></i> Editar Proyecto</h2>
-            <form id="editarProyectoForm" action="editarProyecto" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <form id="editarProyectoForm" action="editarProyecto" method="POST"
+                  enctype="multipart/form-data" class="needs-validation" novalidate>
                 <input type="hidden" name="idProyecto" value="${proyecto.idProyecto}" />
 
                 <!-- Nombre del Proyecto -->
@@ -91,8 +85,14 @@
                     <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-pen"></i></span>
-                        <input type="text" id="nombreProyecto" name="nombreProyecto" class="form-control" value="${proyecto.nombreProyecto}" pattern=".{3,100}" title="El nombre del proyecto debe tener entre 3 y 100 caracteres">
-                        <div class="invalid-feedback">El nombre del proyecto debe tener entre 3 y 100 caracteres.</div>
+                        <input type="text" id="nombreProyecto" name="nombreProyecto"
+                               class="form-control"
+                               value="${proyecto.nombreProyecto}"
+                               required pattern=".{3,100}"
+                               title="El nombre del proyecto debe tener entre 3 y 100 caracteres">
+                        <div class="invalid-feedback">
+                            El nombre del proyecto debe tener entre 3 y 100 caracteres.
+                        </div>
                     </div>
                 </div>
 
@@ -101,8 +101,13 @@
                     <label for="descripcionProyecto" class="form-label">Descripción</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                        <textarea id="descripcionProyecto" name="descripcionProyecto" class="form-control" rows="3" pattern=".{10,500}" title="La descripción debe tener entre 10 y 500 caracteres">${proyecto.descripcionProyecto}</textarea>
-                        <div class="invalid-feedback">La descripción debe tener entre 10 y 500 caracteres.</div>
+                        <textarea id="descripcionProyecto" name="descripcionProyecto"
+                                  class="form-control" rows="3"
+                                  required pattern=".{10,500}"
+                                  title="La descripción debe tener entre 10 y 500 caracteres">${proyecto.descripcionProyecto}</textarea>
+                        <div class="invalid-feedback">
+                            La descripción debe tener entre 10 y 500 caracteres.
+                        </div>
                     </div>
                 </div>
 
@@ -110,8 +115,13 @@
                 <c:forEach var="i" begin="1" end="3">
                     <div class="mb-3">
                         <label for="imagen${i}Proyecto" class="form-label">Imagen ${i}</label>
-                        <input type="file" id="imagen${i}Proyecto" name="imagen${i}Proyecto" class="form-control" accept="image/jpeg,image/png,image/gif" data-max-size="5242880">
-                        <div class="invalid-feedback" id="imagen${i}ProyectoFeedback">Por favor, selecciona un archivo de imagen válido (JPEG, PNG, GIF, máx. 5MB).</div>
+                        <input type="file" id="imagen${i}Proyecto" name="imagen${i}Proyecto"
+                               class="form-control"
+                               accept="image/jpeg,image/png,image/gif"
+                               data-max-size="5242880">
+                        <div class="invalid-feedback" id="imagen${i}ProyectoFeedback">
+                            Por favor, selecciona un archivo de imagen válido (JPEG, PNG, GIF, máx. 5MB).
+                        </div>
                     </div>
                 </c:forEach>
 
@@ -120,8 +130,13 @@
                     <label for="fechaFinalizacionProyecto" class="form-label">Fecha de Finalización</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                        <input type="date" id="fechaFinalizacionProyecto" class="form-control" value="${proyecto.fechaFinalizacionProyecto}">
-                        <div class="invalid-feedback">La fecha debe ser posterior al día actual.</div>
+                        <input type="date" id="fechaFinalizacionProyecto" name="fechaFinalizacionProyecto"
+                               class="form-control"
+                               value="${proyecto.fechaFinalizacionProyecto}"
+                               required>
+                        <div class="invalid-feedback">
+                            La fecha debe ser posterior al día actual.
+                        </div>
                     </div>
                 </div>
 
@@ -130,8 +145,14 @@
                     <label for="metaRecaudacionProyecto" class="form-label">Meta de Recaudación</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
-                        <input type="number" id="metaRecaudacionProyecto" name="metaRecaudacionProyecto" class="form-control" value="${proyecto.metaRecaudacionProyecto}" min="1" step="0.01" title="La meta de recaudación debe ser un número positivo">
-                        <div class="invalid-feedback">La meta de recaudación debe ser un número positivo.</div>
+                        <input type="number" id="metaRecaudacionProyecto" name="metaRecaudacionProyecto"
+                               class="form-control"
+                               value="${proyecto.metaRecaudacionProyecto}"
+                               required min="1" step="0.01"
+                               title="La meta de recaudación debe ser un número positivo">
+                        <div class="invalid-feedback">
+                            La meta de recaudación debe ser un número positivo.
+                        </div>
                     </div>
                 </div>
 
@@ -140,19 +161,28 @@
                     <label for="categoriaProyecto" class="form-label">Categoría</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-list"></i></span>
-                        <select id="categoriaProyecto" name="categoriaProyecto" class="form-select">
+                        <select id="categoriaProyecto" name="categoriaProyecto"
+                                class="form-select" required>
                             <option value="" disabled>Selecciona una categoría</option>
-                            <option value="1" ${proyecto.idCategoria==1?'selected':''}>Tecnología</option>
-                            <option value="2" ${proyecto.idCategoria==2?'selected':''}>Salud</option>
-                            <option value="3" ${proyecto.idCategoria==3?'selected':''}>Medio Ambiente</option>
-                            <option value="5" ${proyecto.idCategoria==5?'selected':''}>Arte</option>
+                            <c:forEach var="cat" items="${categorias}">
+                                <option value="${cat.idCategoria}"
+                                    <c:if test="${cat.idCategoria == proyecto.idCategoria}">
+                                        selected
+                                    </c:if>>
+                                    ${cat.nombreCategoria}
+                                </option>
+                            </c:forEach>
                         </select>
-                        <div class="invalid-feedback">Por favor, selecciona una categoría.</div>
+                        <div class="invalid-feedback">
+                            Por favor, selecciona una categoría.
+                        </div>
                     </div>
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
                 </div>
             </form>
         </div>
@@ -167,7 +197,7 @@
         </div>
     </footer>
 
-    <!-- Bootstrap core JS-->  
+    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Validaciones JS -->
@@ -216,22 +246,17 @@
             input: document.getElementById(`imagen${i}Proyecto`),
             feedback: `imagen${i}ProyectoFeedback`
         }));
-        imageInputs.forEach(({input, feedback}) => input.addEventListener('change', () => validateImage(input, feedback)));
+        imageInputs.forEach(({input, feedback}) =>
+            input.addEventListener('change', () => validateImage(input, feedback))
+        );
 
         form.addEventListener('submit', e => {
             e.preventDefault();
             e.stopPropagation();
-            // Eliminar name de campos vacíos
-            ['nombreProyecto','descripcionProyecto','metaRecaudacionProyecto','categoriaProyecto','.fechaFinalizacionProyecto?'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el && !el.value.trim() || (id==='fechaFinalizacionProyecto' && !validateDate(el))) {
-                    el.removeAttribute('name');
-                }
-            });
-
-            const validDate   = validateDate(dateInput);
-            const validImages = imageInputs.every(({input, feedback}) => validateImage(input, feedback));
-
+            const validDate = validateDate(dateInput);
+            const validImages = imageInputs.every(({input, feedback}) =>
+                validateImage(input, feedback)
+            );
             if (form.checkValidity() && validDate && validImages) {
                 form.submit();
             } else {

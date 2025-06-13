@@ -42,6 +42,7 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+		try {
 
         // Obtener la sesión del usuario
         HttpSession session = request.getSession();
@@ -53,8 +54,7 @@ public class AdminController extends HttpServlet {
             return;
         }
 
-        try {
-            // Obtener el ID del usuario de la sesión
+                    // Obtener el ID del usuario de la sesión
             long idUsuario = sesionUsu.getId();
             
             // Obtener los datos del usuario y los proyectos asociados a él
